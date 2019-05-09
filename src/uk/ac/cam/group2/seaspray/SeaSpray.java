@@ -6,7 +6,7 @@ public class SeaSpray extends JFrame {
     public SeaSpray() {
         super("SeaSpray");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(576, 1024);
+        setSize(360, 640);
     }
 
     public static void main(String[] args) {
