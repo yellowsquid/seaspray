@@ -7,11 +7,13 @@ import java.util.*;
 import org.json.*;
 
 public class JsonReader {
-    public static Daily[] readData(JSONObject o){
+
+    public static List<DailyData> readData(JSONObject o){
         JSONArray days = o.getJSONObject("data").getJSONArray("weather");
-        Daily[] response = new Daily[days.length()];
+        LinkedList<DailyData> response = new LinkedList<>();
+       // DailyData[] response = new DailyData[days.length()];
         for (int i = 0; i < days.length(); i++){
-            response[i] = new Daily(days.getJSONObject(i));
+            response.add(new DailyData(days.getJSONObject(i)));
         }
         return response;
     }

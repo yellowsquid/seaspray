@@ -4,19 +4,11 @@ import org.json.*;
 import java.util.*;
 
 public class GetData {
-    public static List<Daily> localWeather() throws OSNotSupported {
-        String os = System.getProperty("os.name");
-        if (os.contains("Windows") || os.contains("Linux")){
-            // Not implemented as OS specific, default to cambridge
-            // Implementing for Android / iOS would require additional packages to be included
-            // This was not done as they would not be used for demonstrations only being done on Laptop
-            double lon = 0.123;
-            double lat = 52.205;
-            return getWeather(lat,lon);
-        } else {
-            // Other devices not supported
-            throw new OSNotSupported(os);
-        }
+    public static double[] localWeather() {
+        // Not implemented as mobile device specific
+        // Would require additional packages not used in practice
+        // Returns lat, lon
+        return new double[] {52.205,0.123};
     }
 
     public static List<Location> getPlaces(String where){
@@ -36,15 +28,10 @@ public class GetData {
         return new LinkedList<>(noDups);
     }
 
-    public static List<Daily> getWeather(double lat, double lon){
+    public static List<DailyData> getWeather(double lat, double lon){
         String url = "http://api.worldweatheronline.com/premium/v1/marine.ashx?key=7ec22fe9f839499e8c7122127193004&format=json&q=";
         url += lat+","+lon;
         String s = JsonReader.jsonGetRequest(url);
-        List<Daily> data = new LinkedList<>();
-        JSONArray days = new JSONObject(s).getJSONObject("data").getJSONArray("weather");
-        for (int i = 0; i < days.length(); i++){
-            data.add(new Daily(days.getJSONObject(i)));
-        }
-        return data;
+        return JsonReader.readData(new JSONObject(s));
     }
 }
