@@ -4,6 +4,25 @@ import org.json.*;
 import java.util.*;
 
 public class GetData {
+
+    private static final String tideKey = "10f60b65-d8ff-452c-b680-d9dd8c98bbaa";
+
+
+    // Example: https://www.worldtides.info/api?extremes&lat=33.768321&lon=-118.195617&key=10f60b65-d8ff-452c-b680-d9dd8c98bbaa
+
+    // unsure what to return yet
+    public static double[] tideTimes(double lat, double lon){
+        String url = "http://www.worldtides.info/api?extremes&lat="+lat+"&lon="+lon+"&key="+tideKey;
+        String response = JsonReader.jsonGetRequest(url);
+        JSONArray ar = new JSONObject(response).getJSONArray("extremes");
+
+
+        // NOTE: Returns error if data not available within a degree of location requested
+
+
+        return null;
+    }
+
     public static double[] localWeather() {
         // Not implemented as mobile device specific
         // Would require additional packages not used in practice

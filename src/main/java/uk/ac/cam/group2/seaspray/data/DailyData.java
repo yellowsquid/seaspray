@@ -4,7 +4,7 @@ import org.json.*;
 
 
 public class DailyData {
-    private final String date;
+    private final String date; // TODO: Replace with Date object
     private final String sunrise;
     private final String sunset;
     private final HourlyData[] hours;
