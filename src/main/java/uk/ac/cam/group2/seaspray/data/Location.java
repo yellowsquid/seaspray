@@ -8,6 +8,8 @@ public class Location {
     double lon;
     String country;
 
+    // TODO: worldtides.info
+
     public Location (JSONObject o){
         name = o.getString("name");
         lat = o.getJSONObject("coord").getDouble("lat");

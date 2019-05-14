@@ -4,10 +4,26 @@ import org.json.*;
 
 
 public class DailyData {
-    String date;
-    String sunrise;
-    String sunset;
-    HourlyData[] hours;
+    private final String date;
+    private final String sunrise;
+    private final String sunset;
+    private final HourlyData[] hours;
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getSunrise() {
+        return sunrise;
+    }
+
+    public String getSunset() {
+        return sunset;
+    }
+
+    public HourlyData[] getHours() {
+        return hours;
+    }
 
     public DailyData(JSONObject day){
         date = day.getString("date");

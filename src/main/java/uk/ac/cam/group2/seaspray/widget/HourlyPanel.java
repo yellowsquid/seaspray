@@ -12,5 +12,6 @@ import uk.ac.cam.group2.seaspray.data.HourlyData;
  */
 public class HourlyPanel extends JPanel {
     public HourlyPanel(List<HourlyData> hourlyDatas) {
+
     }
 }

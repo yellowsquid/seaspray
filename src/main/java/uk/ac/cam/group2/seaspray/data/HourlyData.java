@@ -3,14 +3,38 @@ package uk.ac.cam.group2.seaspray.data;
 import org.json.JSONObject;
 
 public class HourlyData {
-    double time;
-    int tempC;
-    WindData wind;
-    String desc; // Needed? How are we displaying conditions?
+    private final double time;
+    private final int tempC;
+    private final WindData wind;
+    private final String desc; // Needed? How are we displaying conditions?
 
-    double sigHeight; // significant wave height
+    private final double sigHeight; // significant wave height
     //double swellHeight;
-    int swellDeg;
+    private final int swellDeg;
+
+    public double getTime() {
+        return time;
+    }
+
+    public int getTempC() {
+        return tempC;
+    }
+
+    public WindData getWind() {
+        return wind;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public double getSigHeight() {
+        return sigHeight;
+    }
+
+    public int getSwellDeg() {
+        return swellDeg;
+    }
 
     public HourlyData(JSONObject o){
         time = o.getDouble("time");
