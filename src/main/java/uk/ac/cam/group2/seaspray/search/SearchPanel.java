@@ -1,4 +1,4 @@
-package uk.ac.cam.group2.seaspray;
+package uk.ac.cam.group2.seaspray.search;
 
 import uk.ac.cam.group2.seaspray.data.*;
 
