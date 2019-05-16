@@ -40,9 +40,12 @@ public class SeaSpray extends JFrame {
         rootPanel.setLayout(lm);
         rootPanel.addMouseListener(lm);
         rootPanel.addMouseMotionListener(lm);
-        rootPanel.add(makePanel("Hi"));
-        rootPanel.add(makePanel("Hello"));
-        rootPanel.add(makePanel("Bye"));
+
+
+
+        // CURRENT, HOURLY, WEEKLY data
+        double[] latLon = GetData.localWeather();
+        loadLocation(latLon[1],latLon[0]);
 
         add(headerPanel);
         mainPanel.add(rootPanel);
@@ -54,8 +57,10 @@ public class SeaSpray extends JFrame {
         ((CardLayout)mainPanel.getLayout()).next(mainPanel); 
     }
 
-    public void switchFromSearch(Location l) { // function called by SearchPanel to return to main screen and takes the selected location as an argument
-        ((CardLayout)mainPanel.getLayout()).next(mainPanel); 
+    public void loadLocation(double lon, double lat) { // function called by SearchPanel to return to main screen and takes the selected location as an argument
+        // rebuild all components
+
+        ((CardLayout)mainPanel.getLayout()).next(mainPanel);
     }
 
     public static void main(String[] args) {
