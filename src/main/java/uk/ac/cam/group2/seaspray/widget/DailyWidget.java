@@ -35,9 +35,9 @@ public class DailyWidget extends JPanel {
 
         c.weighty = 1.0;
         c.gridy = 1;
-        add(new HourlyWidget(d.getHours()[3]),c);
+        add(new HourlyWidget(d.getHours().get(3)),c);
 
         c.gridy = 2;
-        add(new HourlyWidget(d.getHours()[5]),c);
+        add(new HourlyWidget(d.getHours().get(5)),c);
     }
 }
