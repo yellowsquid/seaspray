@@ -1,17 +1,21 @@
 package uk.ac.cam.group2.seaspray.data;
 
-import org.json.*;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
+import java.util.Date;
+import java.util.List;
+
+import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 
 public class DailyData {
-    private final Date date; // TODO: Replace with Date object
+    private final Date date;
     private final String sunrise;
     private final String sunset;
-    private final HourlyData[] hours;
+    private final List<HourlyData> hours;
 
     public Date getDate() {
         return date;
@@ -25,26 +29,24 @@ public class DailyData {
         return sunset;
     }
 
-    public HourlyData[] getHours() {
-        return hours;
+    public List<HourlyData> getHours() {
+        return List.copyOf(hours);
     }
 
-    public DailyData(JSONObject day){
-        String format = "YYYY-MM-dd";
-        SimpleDateFormat form = new SimpleDateFormat(format);
-        try {
-            date = form.parse(day.getString("date"));
-        } catch (ParseException e){
-            throw new RuntimeException(e);
-        }
-        JSONObject astro = day.getJSONArray("astronomy").getJSONObject(0);
-        sunrise = astro.getString("sunrise");
-        sunset = astro.getString("sunset");
+    public DailyData(JSONObject day) throws ParseException {
+        this(new SimpleDateFormat("yyyy-MM-dd").parse(day.getString("date")),
+             day.getJSONArray("astronomy").getJSONObject(0).getString("sunrise"),
+             day.getJSONArray("astronomy").getJSONObject(0).getString("sunset"),
+             IntStream.range(0, day.getJSONArray("hourly").length())
+                 .mapToObj(i -> day.getJSONArray("hourly").getJSONObject(i))
+                 .map(o -> new HourlyData(o))
+                 .collect(Collectors.toList()));
+    }
 
-        JSONArray hourData = day.getJSONArray("hourly");
-        hours = new HourlyData[hourData.length()];
-        for (int i = 0; i < hourData.length(); i++){
-            hours[i] = new HourlyData(hourData.getJSONObject(i));
-        }
+    public DailyData(Date date, String sunrise, String sunset, List<HourlyData> hourlyData) {
+        this.date = date;
+        this.sunrise = sunrise;
+        this.sunset = sunset;
+        this.hours = hourlyData;
     }
 }

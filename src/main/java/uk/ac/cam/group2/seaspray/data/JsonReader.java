@@ -3,17 +3,21 @@ package uk.ac.cam.group2.seaspray.data;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
 import java.util.*;
 import org.json.*;
 
 public class JsonReader {
-
     public static List<DailyData> readData(JSONObject o){
         JSONArray days = o.getJSONObject("data").getJSONArray("weather");
-        LinkedList<DailyData> response = new LinkedList<>();
-       // DailyData[] response = new DailyData[days.length()];
+        List<DailyData> response = new ArrayList<>();
         for (int i = 0; i < days.length(); i++){
-            response.add(new DailyData(days.getJSONObject(i)));
+            try {
+                DailyData data = new DailyData(days.getJSONObject(i));
+                response.add(new DailyData(days.getJSONObject(i)));
+            } catch (ParseException e) {
+                System.err.println("Badly formatted date");
+            }
         }
         return response;
     }
