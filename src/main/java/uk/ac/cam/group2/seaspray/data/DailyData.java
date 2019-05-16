@@ -2,14 +2,18 @@ package uk.ac.cam.group2.seaspray.data;
 
 import org.json.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class DailyData {
-    private final String date; // TODO: Replace with Date object
+    private final Date date; // TODO: Replace with Date object
     private final String sunrise;
     private final String sunset;
     private final HourlyData[] hours;
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
@@ -26,7 +30,13 @@ public class DailyData {
     }
 
     public DailyData(JSONObject day){
-        date = day.getString("date");
+        String format = "YYYY-MM-dd";
+        SimpleDateFormat form = new SimpleDateFormat(format);
+        try {
+            date = form.parse(day.getString("date"));
+        } catch (ParseException e){
+            throw new RuntimeException(e);
+        }
         JSONObject astro = day.getJSONArray("astronomy").getJSONObject(0);
         sunrise = astro.getString("sunrise");
         sunset = astro.getString("sunset");
