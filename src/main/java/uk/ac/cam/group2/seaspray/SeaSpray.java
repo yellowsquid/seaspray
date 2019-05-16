@@ -32,7 +32,7 @@ public class SeaSpray extends JFrame {
     private JButton returnButton;
 
     // current location information
-    private double[] currentCoords; 
+    private double[] currentCoords; // latitude, longitude
     private String locationName; 
 
     public SeaSpray() {
@@ -128,7 +128,7 @@ public class SeaSpray extends JFrame {
     }
 
     public void loadLocation(double lo, double la, String name) { // function called by SearchPanel to return to main screen and takes the selected location as an argument
-        currentCoords = new double[]{lo, la};
+        currentCoords = new double[]{la, lo};
         locationName = name;
 
         update();
