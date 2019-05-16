@@ -37,14 +37,25 @@ public class HourlyData {
     }
 
     public HourlyData(JSONObject o){
-        time = o.getDouble("time");
-        tempC = o.getInt("tempC");
-        int speed = o.getInt("windspeedKmph");
-        int dir = o.getInt("winddirDegree");
-        wind = new WindData(speed,dir);
-        // weather url also stored in array in weatherDesc object
-        desc = o.getJSONArray("weatherDesc").getJSONObject(0).getString("value");
-        sigHeight = o.getDouble("sigHeight_m");
-        swellDeg = o.getInt("swellDir");
+        this(o.getDouble("time"),
+             o.getInt("tempC"),
+             new WindData(o.getInt("windspeedKmph"), o.getInt("winddirDegree")),
+             o.getJSONArray("weatherDesc").getJSONObject(0).getString("value"),
+             o.getDouble("sigHeight_m"),
+             o.getInt("swellDir"));
+    }
+
+    public HourlyData(double time,
+                      int tempC,
+                      WindData windData,
+                      String weatherDesc,
+                      double sigHeight,
+                      int swellDir) {
+        this.time = time;
+        this.tempC = tempC;
+        this.wind = windData;
+        this.desc = weatherDesc;
+        this.sigHeight = sigHeight;
+        this.swellDeg = swellDir;
     }
 }
