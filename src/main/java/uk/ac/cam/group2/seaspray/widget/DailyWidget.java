@@ -14,16 +14,9 @@ import java.util.Date;
 
 public class DailyWidget extends JPanel {
     public static String dayOfWeek(DailyData d){
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String day;
-        try{
-            Date date = format.parse(d.getDate());
-            DateFormat format2 = new SimpleDateFormat("EE");
-            day = format2.format(date);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        return day;
+        DateFormat format2 = new SimpleDateFormat("EE");
+        return format2.format(d.getDate());
     }
 
     public DailyWidget (DailyData d){
