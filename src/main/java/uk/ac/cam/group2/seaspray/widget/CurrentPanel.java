@@ -3,6 +3,7 @@ package uk.ac.cam.group2.seaspray.widget;
 import javax.swing.*;
 
 import uk.ac.cam.group2.seaspray.data.CurrentData;
+import uk.ac.cam.group2.seaspray.util.GetWaveIcon;
 
 import java.awt.*;
 
@@ -37,6 +38,9 @@ public class CurrentPanel extends JPanel {
         c.weightx = 1;
         c.weighty = 1;
         add(wave,c);
+
+        c.gridx = 3;
+        add(GetWaveIcon.getIcon(currentData.getWaveDir()),c);
 
         // TODO: Wave direction?
 

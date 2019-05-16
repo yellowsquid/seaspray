@@ -11,7 +11,8 @@ public class GetWaveIcon {
         int dir = (int)((angle+22.5)/45)%8;
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("resources/waveAngles/wave"+dir+".png"));
+            img = ImageIO.read(new File("src/main/resources/waveAngles/wave"+dir+".png"));
+            //img = ImageIO.read(new File("resources/waveAngles/wave"+dir+".png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
