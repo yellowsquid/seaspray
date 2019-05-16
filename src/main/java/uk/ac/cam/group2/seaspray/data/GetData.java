@@ -7,20 +7,29 @@ public class GetData {
 
     private static final String tideKey = "10f60b65-d8ff-452c-b680-d9dd8c98bbaa";
 
-
     // Example: https://www.worldtides.info/api?extremes&lat=33.768321&lon=-118.195617&key=10f60b65-d8ff-452c-b680-d9dd8c98bbaa
 
     // unsure what to return yet
-    public static double[] tideTimes(double lat, double lon){
+    public static LinkedList<TideData> tideTimes(double lat, double lon){
         String url = "http://www.worldtides.info/api?extremes&lat="+lat+"&lon="+lon+"&key="+tideKey;
         String response = JsonReader.jsonGetRequest(url);
+        if (response == null){
+            return new LinkedList<>();
+        }
+        JSONObject output = new JSONObject(response);
+        if (output.getInt("status")==400){
+            return new LinkedList<>();
+        }
         JSONArray ar = new JSONObject(response).getJSONArray("extremes");
-
-
-        // NOTE: Returns error if data not available within a degree of location requested
-
-
-        return null;
+        if (ar.length() < 4){
+            return new LinkedList<>();
+        }
+        LinkedList<TideData> result = new LinkedList<>();
+        for (int i = 0; i < 4; i++){
+            JSONObject o = ar.getJSONObject(i);
+            result.add(new TideData(o.getString("date"),o.getString("type")));
+        }
+        return result;
     }
 
     public static double[] localWeather() {

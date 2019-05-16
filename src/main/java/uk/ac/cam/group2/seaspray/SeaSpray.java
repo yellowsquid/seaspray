@@ -13,6 +13,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import uk.ac.cam.group2.seaspray.search.*;
 import uk.ac.cam.group2.seaspray.data.*;
+import uk.ac.cam.group2.seaspray.widget.CurrentPanel;
+import uk.ac.cam.group2.seaspray.widget.HourlyPanel;
+import uk.ac.cam.group2.seaspray.widget.WeeklyPanel;
+
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class SeaSpray extends JFrame {
     private JPanel searchPanel, // search screen
@@ -40,9 +46,12 @@ public class SeaSpray extends JFrame {
         rootPanel.setLayout(lm);
         rootPanel.addMouseListener(lm);
         rootPanel.addMouseMotionListener(lm);
-        rootPanel.add(makePanel("Hi"));
-        rootPanel.add(makePanel("Hello"));
-        rootPanel.add(makePanel("Bye"));
+
+
+
+        // CURRENT, HOURLY, WEEKLY data
+        double[] latLon = GetData.localWeather();
+        loadLocation(latLon[1],latLon[0]);
 
         add(headerPanel);
         mainPanel.add(rootPanel);
@@ -54,8 +63,35 @@ public class SeaSpray extends JFrame {
         ((CardLayout)mainPanel.getLayout()).next(mainPanel); 
     }
 
-    public void switchFromSearch(Location l) { // function called by SearchPanel to return to main screen and takes the selected location as an argument
-        ((CardLayout)mainPanel.getLayout()).next(mainPanel); 
+    public void loadLocation(double lon, double lat) { // function called by SearchPanel to return to main screen and takes the selected location as an argument
+        // rebuild all components
+        rootPanel.removeAll();
+        List<DailyData> data = GetData.getWeather(lat,lon);
+        rootPanel.add(new CurrentPanel(new CurrentData(data.get(0))));
+
+
+        // Find the 7 hour entries immediately after the current time
+        Date current = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("HH");
+        int time = Integer.valueOf(formatter.format(current))*100;
+        List<HourlyData> next7 = new LinkedList<>();
+        List<HourlyData> firstDay = data.get(0).getHours();
+        for (HourlyData hd : firstDay){
+            if (hd.getTime() >= time){
+                next7.add(hd);
+            }
+        }
+        firstDay = data.get(1).getHours();
+        int i = 0;
+        while (next7.size() < 7){
+            next7.add(firstDay.get(i++));
+        }
+
+        rootPanel.add(new HourlyPanel(next7));
+
+        rootPanel.add(new WeeklyPanel(data));
+
+        ((CardLayout)mainPanel.getLayout()).next(mainPanel);
     }
 
     public static void main(String[] args) {
