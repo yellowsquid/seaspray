@@ -1,18 +1,20 @@
 package uk.ac.cam.group2.seaspray.widget;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+
+import java.io.IOException;
+import java.io.UncheckedIOException;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import uk.ac.cam.group2.seaspray.data.HourlyData;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
 /**
  * Displays time, wind, temperature, and wave height and direction.
- * FIXME: I do nothing
  */
 public class HourlyWidget extends JPanel {
     public HourlyWidget(HourlyData h) {
@@ -21,12 +23,12 @@ public class HourlyWidget extends JPanel {
 
         // Global constraints
         GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.VERTICAL;
         c.gridy = 0;
 
         // Time
         c.gridx = 0;
         c.weightx = 0.5;
+        c.fill = GridBagConstraints.VERTICAL;
         c.anchor = GridBagConstraints.EAST;
         String clockTime = (int)(h.getTime()/100) + ":00";
 
@@ -40,6 +42,7 @@ public class HourlyWidget extends JPanel {
         // Wind widget
         c.gridx = 1;
         c.weightx = 1;
+        c.fill = GridBagConstraints.BOTH;
         c.anchor = GridBagConstraints.CENTER;
         WindWidget wind = new WindWidget(h.getWind());
         add(wind, c);
@@ -47,6 +50,7 @@ public class HourlyWidget extends JPanel {
         // Temperature
         c.gridx = 2;
         c.weightx = 0.5;
+        c.fill = GridBagConstraints.VERTICAL;
         c.anchor = GridBagConstraints.CENTER;
         JLabel temp = new JLabel(h.getTempC()  + "\u00B0" + "C");
         add(temp, c);
@@ -54,32 +58,25 @@ public class HourlyWidget extends JPanel {
         // Wave height
         c.gridx = 3;
         c.weightx = 0.5;
+        c.fill = GridBagConstraints.VERTICAL;
         c.anchor = GridBagConstraints.EAST;
-        JLabel wave = new JLabel((int)(h.getSigHeight()*3.28) + " ft");
+        String waveLabel = String.format("%03.1f ft", h.getSigHeight()*3.28);
+        JLabel wave = new JLabel(waveLabel);
         add(wave, c);
 
         // Wave direction
         c.gridx = 4;
         c.weightx = 0.5;
+        c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.WEST;
-        add(new JLabel("dir"), c);
-        // FIXME: DRAW WAVE DIRECTION ICON
 
-        /*
-        BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("resources/waveArrow.png"));
+            double waveDeg = h.getSwellDeg();
+            WaveDirectionWidget waveDir = new WaveDirectionWidget(waveDeg);
+            waveDir.setPreferredSize(new Dimension(32, 32));
+            add(waveDir, c);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new UncheckedIOException("Cannot find wave dir icon.", e);
         }
-        // SET TO ACTUAL ANGLE
-        img = ImageManipulate.rotateWave(img,h.swellDeg);
-
-        // img = ImageManipulate.rotate(img,0);
-        Image dimg = img.getScaledInstance(60, 60,
-                Image.SCALE_SMOOTH);
-        JLabel picLabel = new JLabel(new ImageIcon(dimg));
-        add(picLabel,c);
-        */
     }
 }

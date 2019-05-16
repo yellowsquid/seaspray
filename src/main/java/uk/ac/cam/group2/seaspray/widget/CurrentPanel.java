@@ -49,7 +49,7 @@ public class CurrentPanel extends JPanel {
             cond.setPreferredSize(new Dimension(50, 50));
             add(cond, c);
         } catch (IOException e) {
-            throw new UncheckedIOException("Cannot load conditions icon.", e);
+            throw new UncheckedIOException("Cannot load conditions icon: " + code, e);
         }
 
         // Temperature
