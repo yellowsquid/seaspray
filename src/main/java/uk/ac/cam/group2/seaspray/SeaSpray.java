@@ -84,7 +84,7 @@ public class SeaSpray extends JFrame {
         firstDay = data.get(1).getHours();
         int i = 0;
         while (next7.size() < 7){
-            next7.add(firstDay.get(i));
+            next7.add(firstDay.get(i++));
         }
 
         rootPanel.add(new HourlyPanel(next7));
