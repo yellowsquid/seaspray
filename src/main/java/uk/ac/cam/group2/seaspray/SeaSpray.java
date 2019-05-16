@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.Box;
@@ -144,7 +145,8 @@ public class SeaSpray extends JFrame {
         // rebuild all components
         rootPanel.removeAll();
         List<DailyData> data = GetData.getWeather(currentCoords[0], currentCoords[1]);
-        rootPanel.add(new CurrentPanel(new CurrentData(data.get(0))));
+        LinkedList<TideData> tides = GetData.tideTimes(currentCoords[0],currentCoords[1]);
+        rootPanel.add(new CurrentPanel(new CurrentData(data.get(0), tides)));
 
         // Find the 7 hour entries immediately after the current time
         Date current = new Date();

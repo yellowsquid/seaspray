@@ -4,11 +4,13 @@ import javax.swing.*;
 
 import uk.ac.cam.group2.seaspray.data.Condition;
 import uk.ac.cam.group2.seaspray.data.CurrentData;
+import uk.ac.cam.group2.seaspray.data.TideData;
 
 import java.awt.*;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.LinkedList;
 
 /**
  * Current conditions
@@ -117,9 +119,9 @@ public class CurrentPanel extends JPanel {
         c.anchor = GridBagConstraints.CENTER;
         c.fill = GridBagConstraints.BOTH;
         // FIXME: missing tide data
-        // TidePanel tides = new TidePanel(currentData.getTideData());
-        JLabel tides = new JLabel("Tides stuff here");
-        add(tides, c);
+        TidePanel tideText = new TidePanel(currentData.getTides());
+        //JLabel tideText = new JLabel("Tides stuff here");
+        add(tideText, c);
 
         // Sunrise and sunset
         // FIXME: currently static placeholder text

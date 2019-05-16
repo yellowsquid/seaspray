@@ -55,8 +55,19 @@ public class GetData {
 
     public static List<Location> removeDuplicates(List<Location> original){
         TreeSet<Location> noDups = new TreeSet<>(Comparator.comparing(Location::toString));
-        noDups.addAll(original);
+        for (Location l : original){
+            if (dataExists(l)){
+                noDups.add(l);
+            }
+        }
         return new LinkedList<>(noDups);
+    }
+
+    private static boolean dataExists (Location l){
+        String url = "http://api.worldweatheronline.com/premium/v1/marine.ashx?key=7ec22fe9f839499e8c7122127193004&format=json&q=";
+        url += l.getLat()+","+l.getLon();
+        JSONObject s = new JSONObject(JsonReader.jsonGetRequest(url)).getJSONObject("data");
+        return s.has("weather");
     }
 
     public static List<DailyData> getWeather(double lat, double lon){

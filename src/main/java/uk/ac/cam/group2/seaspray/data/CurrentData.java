@@ -2,6 +2,7 @@ package uk.ac.cam.group2.seaspray.data;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 
 public class CurrentData {
     private WindData wind;
@@ -11,9 +12,11 @@ public class CurrentData {
     private String sunSet;
     private int weatherCode;
     private int waveDir;
+    private LinkedList<TideData> tides;
 
     // TODO: Build current data
-    public CurrentData(DailyData d){
+    public CurrentData(DailyData d, LinkedList<TideData> tides){
+        this.tides = tides;
         sunRise = d.getSunrise();
         sunSet = d.getSunset();
 
@@ -62,4 +65,6 @@ public class CurrentData {
     public int getWeatherCode() {
         return weatherCode;
     }
+
+    public LinkedList<TideData> getTides() {return tides;}
 }
