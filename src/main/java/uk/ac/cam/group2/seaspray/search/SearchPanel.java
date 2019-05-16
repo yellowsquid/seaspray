@@ -1,6 +1,7 @@
 package uk.ac.cam.group2.seaspray.search;
 
 import uk.ac.cam.group2.seaspray.data.*;
+import uk.ac.cam.group2.seaspray.*;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -22,8 +23,11 @@ public class SearchPanel extends JPanel {
     private JPanel entries;
     private int verticalSpace = 50,
                 cap = 7;
+    private SeaSpray source;
 
-    public SearchPanel() {
+    public SearchPanel(SeaSpray ss) {
+        source = ss;
+
         recents = new LinkedList<Location>();
         searchBar = new JTextField();
         searchButton = new JButton();
@@ -114,6 +118,9 @@ public class SearchPanel extends JPanel {
             recents.remove(cap - 1);
         }
         recents.add(0, l);
+
+        source.switchFromSearch(l);
+
         reset();
     }
 
@@ -130,10 +137,10 @@ public class SearchPanel extends JPanel {
         display(results);
     }
 
-    public static void main(String[] args) {
-        JFrame bigFrame = new JFrame();
-        bigFrame.add(new SearchPanel());
-        bigFrame.setSize(360, 640);
-        bigFrame.setVisible(true);
-    }
+    // public static void main(String[] args) {
+    //     JFrame bigFrame = new JFrame();
+    //     bigFrame.add(new SearchPanel());
+    //     bigFrame.setSize(360, 640);
+    //     bigFrame.setVisible(true);
+    // }
 }
