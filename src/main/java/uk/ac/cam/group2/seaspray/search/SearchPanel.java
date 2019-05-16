@@ -6,6 +6,8 @@ import uk.ac.cam.group2.seaspray.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
@@ -50,19 +52,11 @@ public class SearchPanel extends JPanel {
         searchButton.setText("Search");
         searchButton.setMaximumSize(new Dimension(50, 50));
         searchButton.setBackground(Color.decode("#72C7EC"));
+
         // make button search when clicked
-        searchButton.addMouseListener(new MouseListener(){
+        searchButton.addActionListener(new ActionListener(){
             @Override
-            public void mouseReleased(MouseEvent e) {}
-            @Override
-            public void mousePressed(MouseEvent e) {}
-            @Override
-            public void mouseExited(MouseEvent e) {}
-            @Override
-            public void mouseEntered(MouseEvent e) {}
-        
-            @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 search();                
             }
         });
