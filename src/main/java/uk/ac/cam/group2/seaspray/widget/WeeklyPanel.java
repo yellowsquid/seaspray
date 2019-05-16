@@ -20,9 +20,10 @@ public class WeeklyPanel extends JPanel {
         setBorder(BorderFactory.createMatteBorder(1,0,1,0, Color.BLACK));
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = 1;
+        c.weighty = 1;
         c.gridx = 0;
         c.gridy = 0;
-        c.fill = GridBagConstraints.HORIZONTAL;
+        c.fill = GridBagConstraints.BOTH;
 
         for (int i = 1; i < dailyDatas.size(); i++) {
             DailyData data = dailyDatas.get(i);
