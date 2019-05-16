@@ -65,7 +65,7 @@ public class CurrentPanel extends JPanel {
         c.gridwidth = 1;
         c.anchor = GridBagConstraints.WEST;
         c.fill = GridBagConstraints.VERTICAL;
-        JLabel wave = new JLabel(currentData.getSigWaveHeightFt()+"ft");
+        JLabel wave = new JLabel(currentData.getSigWaveHeightFt() + " ft");
         // TODO: Adjust font size
         add(wave,c);
 
@@ -89,6 +89,8 @@ public class CurrentPanel extends JPanel {
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.CENTER;
         c.fill = GridBagConstraints.BOTH;
+        // FIXME: missing tide data
+        // TidePanel tides = new TidePanel(currentData.getTideData());
         JLabel tides = new JLabel("Tides stuff here");
         add(tides, c);
 

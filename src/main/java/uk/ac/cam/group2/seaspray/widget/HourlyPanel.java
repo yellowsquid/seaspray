@@ -15,13 +15,13 @@ import uk.ac.cam.group2.seaspray.data.HourlyData;
 public class HourlyPanel extends JPanel {
     public HourlyPanel(List<HourlyData> hourlyDatas) {
         setLayout(new GridBagLayout());
-        setBorder(BorderFactory.createMatteBorder(1,0,1,0, Color.BLACK));
+        setBackground(Color.WHITE);
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = 1;
         c.weighty = 1;
         c.gridx = 0;
         c.gridy = 0;
-        c.fill = GridBagConstraints.HORIZONTAL;
+        c.fill = GridBagConstraints.BOTH;
 
         for (HourlyData data : hourlyDatas) {
             add(new HourlyWidget(data), c);

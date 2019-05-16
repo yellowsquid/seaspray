@@ -17,7 +17,6 @@ public class WeeklyPanel extends JPanel {
 
     public WeeklyPanel(List<DailyData> dailyDatas) {
         setLayout(new GridBagLayout());
-        setBorder(BorderFactory.createMatteBorder(1,0,1,0, Color.BLACK));
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = 1;
         c.weighty = 1;

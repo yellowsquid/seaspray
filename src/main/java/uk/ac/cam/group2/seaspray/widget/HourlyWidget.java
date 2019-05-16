@@ -17,31 +17,55 @@ import java.io.IOException;
 public class HourlyWidget extends JPanel {
     public HourlyWidget(HourlyData h) {
         setLayout(new GridBagLayout());
-        String clockTime = (int)(h.getTime()/100) + ":00";
-        JLabel time = new JLabel(clockTime);
+        setBackground(Color.WHITE);
+
+        // Global constraints
         GridBagConstraints c = new GridBagConstraints();
-        c.weightx = 0.2;
+        c.fill = GridBagConstraints.VERTICAL;
         c.gridy = 0;
+
+        // Time
         c.gridx = 0;
-        add(time,c);
+        c.weightx = 0.5;
+        c.anchor = GridBagConstraints.EAST;
+        String clockTime = (int)(h.getTime()/100) + ":00";
 
+        if (clockTime.length() == 4) {
+            clockTime = "0" + clockTime;
+        }
 
+        JLabel time = new JLabel(clockTime);
+        add(time, c);
+
+        // Wind widget
         c.gridx = 1;
-        add(new WindWidget(h.getWind()),c);
+        c.weightx = 1;
+        c.anchor = GridBagConstraints.CENTER;
+        WindWidget wind = new WindWidget(h.getWind());
+        add(wind, c);
 
-        JLabel temp = new JLabel(h.getTempC()  + "\u00B0" + "C");
+        // Temperature
         c.gridx = 2;
-        add(temp,c);
+        c.weightx = 0.5;
+        c.anchor = GridBagConstraints.CENTER;
+        JLabel temp = new JLabel(h.getTempC()  + "\u00B0" + "C");
+        add(temp, c);
 
-        JLabel wave = new JLabel((int)(h.getSigHeight()*3.28)+" ft");
+        // Wave height
         c.gridx = 3;
-        add(wave,c);
+        c.weightx = 0.5;
+        c.anchor = GridBagConstraints.EAST;
+        JLabel wave = new JLabel((int)(h.getSigHeight()*3.28) + " ft");
+        add(wave, c);
 
+        // Wave direction
         c.gridx = 4;
+        c.weightx = 0.5;
+        c.anchor = GridBagConstraints.WEST;
+        add(new JLabel("dir"), c);
+        // FIXME: DRAW WAVE DIRECTION ICON
 
         /*
-        // TODO: DRAW WAVE DIRECTION ICON
-
         BufferedImage img = null;
         try {
             img = ImageIO.read(new File("resources/waveArrow.png"));

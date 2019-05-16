@@ -6,7 +6,7 @@ public class HourlyData {
     private final double time;
     private final int tempC;
     private final WindData wind;
-    private final String desc; // Needed? How are we displaying conditions?
+    private final String desc; // Needed for current conditions. Correct place?
 
     private final double sigHeight; // significant wave height
     //double swellHeight;

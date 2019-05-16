@@ -1,8 +1,6 @@
 package uk.ac.cam.group2.seaspray.widget;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 
 import uk.ac.cam.group2.seaspray.data.*;
 
@@ -21,20 +19,23 @@ public class DailyWidget extends JPanel {
 
     public DailyWidget (DailyData d){
         setLayout(new GridBagLayout());
+        setBackground(Color.WHITE);
         GridBagConstraints c = new GridBagConstraints();
-        c.weighty = 0.2;
         c.weightx = 1.0;
+        c.weighty = 0.2;
         c.gridy = 0;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        setBorder(new EmptyBorder(2,10,2,2));
+        c.fill = GridBagConstraints.VERTICAL;
+        c.anchor = GridBagConstraints.WEST;
+        c.ipadx = 16;
         JLabel title = new JLabel(dayOfWeek(d));
         Font labelFont = title.getFont();
         title.setFont(new Font(labelFont.getName(), Font.BOLD, 18));
-        title.setBorder(BorderFactory.createMatteBorder(1,-1,-1,-1,Color.BLACK));
         add(title,c);
 
         c.weighty = 1.0;
         c.gridy = 1;
+        c.ipadx = 0;
+        c.fill = GridBagConstraints.BOTH;
         add(new HourlyWidget(d.getHours().get(3)),c);
 
         c.gridy = 2;
