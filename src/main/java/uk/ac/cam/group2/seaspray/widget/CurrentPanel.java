@@ -2,10 +2,13 @@ package uk.ac.cam.group2.seaspray.widget;
 
 import javax.swing.*;
 
+import uk.ac.cam.group2.seaspray.data.Condition;
 import uk.ac.cam.group2.seaspray.data.CurrentData;
-import uk.ac.cam.group2.seaspray.util.GetWaveIcon;
 
 import java.awt.*;
+
+import java.io.IOException;
+import java.io.UncheckedIOException;
 
 /**
  * Current conditions
@@ -29,10 +32,25 @@ public class CurrentPanel extends JPanel {
         c.weighty = 0.125;
         c.gridwidth = 1;
         c.anchor = GridBagConstraints.EAST;
-        c.fill = GridBagConstraints.VERTICAL;
-        // FIXME: conditions icon
-        JLabel cond = new JLabel(currentData.getDesc());
-        add(cond, c);
+        c.fill = GridBagConstraints.NONE;
+        int code = currentData.getWeatherCode();
+        String path = Condition.RAIN_MEDIUM.getPath();
+
+        for (Condition condition : Condition.values()) {
+            if (condition.hasCode(code)) {
+                path = condition.getPath();
+                break;
+            }
+        }
+
+        try {
+            IconWidget cond = new IconWidget(path);
+            // FIXME: static size
+            cond.setPreferredSize(new Dimension(50, 50));
+            add(cond, c);
+        } catch (IOException e) {
+            throw new UncheckedIOException("Cannot load conditions icon.", e);
+        }
 
         // Temperature
         c.gridx = 0;
@@ -77,8 +95,17 @@ public class CurrentPanel extends JPanel {
         c.weighty = 0.125;
         c.gridwidth = 1;
         c.anchor = GridBagConstraints.EAST;
-        c.fill = GridBagConstraints.VERTICAL;
-        add(GetWaveIcon.getIcon(currentData.getWaveDir()),c);
+        c.fill = GridBagConstraints.NONE;
+
+        try {
+            double waveDegs = currentData.getWaveDir();
+            WaveDirectionWidget waveDir = new WaveDirectionWidget(waveDegs);
+            // FIXME: static size
+            waveDir.setPreferredSize(new Dimension(50, 50));
+            add(waveDir, c);
+        } catch (IOException e) {
+            throw new UncheckedIOException("Cannot load wave direction icon.", e);
+        }
 
         // Tides
         // FIXME: currently static placeholder text

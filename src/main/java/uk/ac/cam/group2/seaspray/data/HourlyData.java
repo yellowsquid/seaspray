@@ -6,7 +6,7 @@ public class HourlyData {
     private final double time;
     private final int tempC;
     private final WindData wind;
-    private final String desc; // Needed for current conditions. Correct place?
+    private final int weatherCode;
 
     private final double sigHeight; // significant wave height
     //double swellHeight;
@@ -24,8 +24,8 @@ public class HourlyData {
         return wind;
     }
 
-    public String getDesc() {
-        return desc;
+    public int getWeatherCode() {
+        return weatherCode;
     }
 
     public double getSigHeight() {
@@ -40,7 +40,7 @@ public class HourlyData {
         this(o.getDouble("time"),
              o.getInt("tempC"),
              new WindData(o.getInt("windspeedKmph"), o.getInt("winddirDegree")),
-             o.getJSONArray("weatherDesc").getJSONObject(0).getString("value"),
+             o.getInt("weatherCode"),
              o.getDouble("sigHeight_m"),
              o.getInt("swellDir"));
     }
@@ -48,13 +48,13 @@ public class HourlyData {
     public HourlyData(double time,
                       int tempC,
                       WindData windData,
-                      String weatherDesc,
+                      int weatherCode,
                       double sigHeight,
                       int swellDir) {
         this.time = time;
         this.tempC = tempC;
         this.wind = windData;
-        this.desc = weatherDesc;
+        this.weatherCode = weatherCode;
         this.sigHeight = sigHeight;
         this.swellDeg = swellDir;
     }

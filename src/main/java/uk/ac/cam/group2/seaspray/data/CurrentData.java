@@ -9,7 +9,7 @@ public class CurrentData {
     private double sigWaveHeightFt;
     private String sunRise; // TODO: Change to date or ensure parsed as time string
     private String sunSet;
-    private String desc;
+    private int weatherCode;
     private int waveDir;
 
     // TODO: Build current data
@@ -31,7 +31,7 @@ public class CurrentData {
         wind = justGone.getWind();
         TempC = justGone.getTempC();
         sigWaveHeightFt = justGone.getSigHeight();
-        desc = justGone.getDesc();
+        weatherCode = justGone.getWeatherCode();
         waveDir = justGone.getSwellDeg();
     }
 
@@ -59,7 +59,7 @@ public class CurrentData {
         return sunSet;
     }
 
-    public String getDesc() {
-        return desc;
+    public int getWeatherCode() {
+        return weatherCode;
     }
 }
