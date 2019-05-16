@@ -7,29 +7,38 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import uk.ac.cam.group2.seaspray.search.*;
 import uk.ac.cam.group2.seaspray.data.*;
 import uk.ac.cam.group2.seaspray.widget.*;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 public class SeaSpray extends JFrame {
-    private JPanel searchPanel; // search screen
+    private SearchPanel searchPanel; // search screen
     private JPanel rootPanel; // home screen
     private JPanel mainPanel; // main panel, switches between search and root
     private JPanel headerPanel; // panel containing the header, always on top
     private JPanel header; // actual header inside the panel
 
     // header buttons
-    private JButton getLocationButton;
-    private JButton goSearchButton;
-    private JButton returnButton;
+    private IconButtonWidget getLocationButton;
+    private IconButtonWidget goSearchButton;
+    private IconButtonWidget returnButton;
 
     // current location information
     private double[] currentCoords; // latitude, longitude
@@ -42,30 +51,28 @@ public class SeaSpray extends JFrame {
         setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 
         // header button functionality
-        getLocationButton = new JButton("Location");
-        getLocationButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                findCurrentLocation();
-            }
-        });
+        try {
+            getLocationButton = new IconButtonWidget("src/main/resources/map.png",
+                                                     this::findCurrentLocation);
+        } catch (IOException e) {
+            throw new UncheckedIOException("Missing map icon", e);
+        }
 
-        goSearchButton = new JButton("Search");
-        goSearchButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                switchToSearch();
-            }
-        });
+        try {
+            goSearchButton = new IconButtonWidget("src/main/resources/search.png",
+                                                  this::switchToSearch);
+        } catch (IOException e) {
+            throw new UncheckedIOException("Missing search icon", e);
+        }
 
-        returnButton = new JButton("Return"); // used for returning from search without selecting a location
-        returnButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadLocation(currentCoords[0], currentCoords[1], locationName); // keeps the current location information
-                ((SearchPanel)searchPanel).reset();
-            }
-        });
+        try {
+            returnButton = new IconButtonWidget("src/main/resources/back.png", () -> {
+                    loadLocation(currentCoords[0], currentCoords[1], locationName);
+                    searchPanel.reset();
+            });
+        } catch (IOException e) {
+            throw new UncheckedIOException("Missing back icon", e);
+        }
 
         // initializing header panel
         headerPanel = new JPanel();
@@ -98,7 +105,7 @@ public class SeaSpray extends JFrame {
         add(mainPanel);
     }
 
-    private void changeHeader(JButton b) {
+    private void changeHeader(IconButtonWidget b) {
         header = new Header(getLocationButton, b, locationName);
         headerPanel.removeAll();
         headerPanel.add(header, BorderLayout.CENTER);
@@ -141,9 +148,9 @@ public class SeaSpray extends JFrame {
 
         // Find the 7 hour entries immediately after the current time
         Date current = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("HH");
+        DateFormat formatter = new SimpleDateFormat("HH");
         int time = Integer.valueOf(formatter.format(current))*100;
-        List<HourlyData> next7 = new LinkedList<>();
+        List<HourlyData> next7 = new ArrayList<>();
         List<HourlyData> firstDay = data.get(0).getHours();
         for (HourlyData hd : firstDay){
             if (hd.getTime() >= time){
