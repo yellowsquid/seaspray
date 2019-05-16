@@ -40,8 +40,7 @@ public class HourlyWidget extends JPanel {
         c.gridx = 4;
 
         /*
-
-        \\TODO: DRAW WAVE DIRECTION ICON
+        // TODO: DRAW WAVE DIRECTION ICON
 
         BufferedImage img = null;
         try {
@@ -52,10 +51,11 @@ public class HourlyWidget extends JPanel {
         // SET TO ACTUAL ANGLE
         img = ImageManipulate.rotateWave(img,h.swellDeg);
 
-        //img = ImageManipulate.rotate(img,0);
+        // img = ImageManipulate.rotate(img,0);
         Image dimg = img.getScaledInstance(60, 60,
                 Image.SCALE_SMOOTH);
         JLabel picLabel = new JLabel(new ImageIcon(dimg));
-        add(picLabel,c);*/
+        add(picLabel,c);
+        */
     }
 }
