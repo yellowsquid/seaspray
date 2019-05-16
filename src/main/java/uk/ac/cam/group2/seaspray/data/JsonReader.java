@@ -23,7 +23,7 @@ public class JsonReader {
     }
 
     public static String jsonGetRequest(String urlQueryString) {
-        String json = null;
+        String json;
         try {
             URL url = new URL(urlQueryString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -37,6 +37,7 @@ public class JsonReader {
             json = streamToString(inStream); // input stream to string
         } catch (IOException ex) {
             ex.printStackTrace();
+            return null;
         }
         return json;
     }

@@ -4,6 +4,9 @@ plugins {
 
     // Apply the application plugin to add support for building an application
     id 'application'
+
+    // Package as a jar.
+    id 'com.github.johnrengelman.shadow' version '5.0.0'
 }
 
 repositories {

@@ -32,6 +32,9 @@ public class GetData {
 
     public static List<Location> getPlaces(String where){
         String response = JsonReader.jsonGetRequest("http://api.openweathermap.org/data/2.5/find?q="+where+"&type=like&APPID=f4c78c6cc6d74b4862713c5f05505174");
+        if (response == null){
+            return new LinkedList<>();
+        }
         JSONObject o = new JSONObject(response);
         JSONArray ar = o.getJSONArray("list");
         List<Location> places = new LinkedList<>();
