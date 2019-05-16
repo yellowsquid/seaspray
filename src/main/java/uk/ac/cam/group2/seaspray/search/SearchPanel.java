@@ -10,11 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
-
-//TODO: CHANGE BUILD.GRADLE BACK
 
 public class SearchPanel extends JPanel {
     private List<Location> recents;
@@ -126,21 +125,27 @@ public class SearchPanel extends JPanel {
 
     // searches for a location, shows results
     public void search() {
-        System.out.println("Searching for " + searchBar.getText());
-        List<Location> results = GetData.getPlaces(searchBar.getText());
+        String searchPrompt = searchBar.getText();
+        List<Location> results;
 
-        System.out.println("Found results:");
-        for(Location l : results) {
-            System.out.println(l);
+        if(searchPrompt.equals("")) {
+            JOptionPane.showMessageDialog(null, "Please enter something in the search bar!");
+            return;
+        } else {
+            System.out.println("Searching for " + searchPrompt);
+            results = GetData.getPlaces(searchPrompt);
+
+            if(results.size() == 0) {
+                results = recents;
+                JOptionPane.showMessageDialog(null, "No results found");
+            } else {
+                System.out.println("Found results:");
+                for(Location l : results) {
+                    System.out.println(l);
+                }
+            }
         }
-
+        
         display(results);
     }
-
-    // public static void main(String[] args) {
-    //     JFrame bigFrame = new JFrame();
-    //     bigFrame.add(new SearchPanel());
-    //     bigFrame.setSize(360, 640);
-    //     bigFrame.setVisible(true);
-    // }
 }
