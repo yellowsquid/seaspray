@@ -17,6 +17,7 @@ import uk.ac.cam.group2.seaspray.widget.CurrentPanel;
 import uk.ac.cam.group2.seaspray.widget.HourlyPanel;
 import uk.ac.cam.group2.seaspray.widget.WeeklyPanel;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class SeaSpray extends JFrame {
@@ -68,8 +69,25 @@ public class SeaSpray extends JFrame {
         List<DailyData> data = GetData.getWeather(lat,lon);
         rootPanel.add(new CurrentPanel(new CurrentData(data.get(0))));
 
-        // TODO: Extract next 7 hours and pass list
-        rootPanel.add(new HourlyPanel(null));
+
+        // Find the 7 hour entries immediately after the current time
+        Date current = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("HH");
+        int time = Integer.valueOf(formatter.format(current))*100;
+        List<HourlyData> next7 = new LinkedList<>();
+        List<HourlyData> firstDay = data.get(0).getHours();
+        for (HourlyData hd : firstDay){
+            if (hd.getTime() >= time){
+                next7.add(hd);
+            }
+        }
+        firstDay = data.get(1).getHours();
+        int i = 0;
+        while (next7.size() < 7){
+            next7.add(firstDay.get(i));
+        }
+
+        rootPanel.add(new HourlyPanel(next7));
 
         rootPanel.add(new WeeklyPanel(data));
 
