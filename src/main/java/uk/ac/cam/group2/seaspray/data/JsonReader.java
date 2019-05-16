@@ -13,7 +13,6 @@ public class JsonReader {
         List<DailyData> response = new ArrayList<>();
         for (int i = 0; i < days.length(); i++){
             try {
-                DailyData data = new DailyData(days.getJSONObject(i));
                 response.add(new DailyData(days.getJSONObject(i)));
             } catch (ParseException e) {
                 System.err.println("Badly formatted date");
