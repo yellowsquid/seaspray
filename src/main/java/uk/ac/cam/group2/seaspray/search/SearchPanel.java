@@ -77,7 +77,7 @@ public class SearchPanel extends JPanel {
         this.setBackground(Color.white);
     }
 
-    public void display(List<Location> info) {
+    private void display(List<Location> info) {
         entries.removeAll();
 
         // if there are no entries to display, return
@@ -119,16 +119,22 @@ public class SearchPanel extends JPanel {
     }
 
     // remove a location if it is in recents
-    public void removeRecent(String s) {
+    private void removeRecent(String s) {
+        List<Location> toRemove = new LinkedList<>();
+
         for(Location l : recents) {
             if(l.toString().equals(s)) {
-                recents.remove(l);
+                toRemove.add(l);
             }
+        }
+
+        for(Location l : toRemove) {
+            recents.remove(l);
         }
     }
 
     // selects a location, modifies recents accordingly
-    public void select(Location l) {
+    private void select(Location l) {
         System.out.println("selected " + l.toString());
 
         removeRecent(l.toString());
@@ -138,14 +144,14 @@ public class SearchPanel extends JPanel {
         }
         recents.add(0, l); // add the new selection to the recents list
 
-        source.loadLocation(l.getLon(),l.getLat() );
+        source.loadLocation(l.getLon(), l.getLat(), l.toString());
 
         // go back to showing the recent list
         reset();
     }
 
     // searches for a location, shows results
-    public void search() {
+    private void search() {
         String searchPrompt = searchBar.getText();
         List<Location> results;
         errorLabel.setText(""); // clear the error output from the last time
