@@ -33,13 +33,12 @@ public class SeaSpray extends JFrame {
 
     // current location information
     private double[] currentCoords; // latitude, longitude
-    private String locationName; 
+    private String locationName;
 
     public SeaSpray() {
         super("SeaSpray");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(360, 640);
-        setResizable(false);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 
         // header button functionality
@@ -71,13 +70,12 @@ public class SeaSpray extends JFrame {
         // initializing header panel
         headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
-        headerPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 228));
+        headerPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
         headerPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 50));
 
         // creating the main screen that will switch between search and information
         mainPanel = new JPanel();
         mainPanel.setLayout(new CardLayout());
-        mainPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 590));
 
         searchPanel = new SearchPanel(this);
 
@@ -97,7 +95,6 @@ public class SeaSpray extends JFrame {
 
         mainPanel.add(rootPanel, "root");
         mainPanel.add(searchPanel, "search");
-        add(Box.createVerticalGlue());
         add(mainPanel);
     }
 
@@ -124,7 +121,7 @@ public class SeaSpray extends JFrame {
 
     private void switchToSearch() {
         changeHeader(returnButton);
-        ((CardLayout)mainPanel.getLayout()).next(mainPanel); 
+        ((CardLayout)mainPanel.getLayout()).next(mainPanel);
     }
 
     public void loadLocation(double lo, double la, String name) { // function called by SearchPanel to return to main screen and takes the selected location as an argument
