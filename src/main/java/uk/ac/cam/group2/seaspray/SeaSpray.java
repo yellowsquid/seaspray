@@ -13,6 +13,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import uk.ac.cam.group2.seaspray.search.*;
 import uk.ac.cam.group2.seaspray.data.*;
+import uk.ac.cam.group2.seaspray.widget.CurrentPanel;
+import uk.ac.cam.group2.seaspray.widget.HourlyPanel;
+import uk.ac.cam.group2.seaspray.widget.WeeklyPanel;
+
+import java.util.*;
 
 public class SeaSpray extends JFrame {
     private JPanel searchPanel, // search screen
@@ -59,6 +64,14 @@ public class SeaSpray extends JFrame {
 
     public void loadLocation(double lon, double lat) { // function called by SearchPanel to return to main screen and takes the selected location as an argument
         // rebuild all components
+        rootPanel.removeAll();
+        List<DailyData> data = GetData.getWeather(lat,lon);
+        rootPanel.add(new CurrentPanel(new CurrentData(data.get(0))));
+
+        // TODO: Extract next 7 hours and pass list
+        rootPanel.add(new HourlyPanel(null));
+
+        rootPanel.add(new WeeklyPanel(data));
 
         ((CardLayout)mainPanel.getLayout()).next(mainPanel);
     }
