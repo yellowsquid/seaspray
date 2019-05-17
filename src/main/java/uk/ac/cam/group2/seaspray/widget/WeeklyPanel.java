@@ -1,18 +1,11 @@
 package uk.ac.cam.group2.seaspray.widget;
 
 import java.awt.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-
 import javax.swing.*;
-
 import uk.ac.cam.group2.seaspray.data.DailyData;
-import uk.ac.cam.group2.seaspray.data.HourlyData;
 
-/**
- * Displays weather for the next week.
- */
+/** Displays weather for the next week. */
 public class WeeklyPanel extends JPanel {
 
     public WeeklyPanel(List<DailyData> dailyDatas) {

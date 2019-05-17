@@ -1,13 +1,11 @@
 package uk.ac.cam.group2.seaspray.search;
 
-import uk.ac.cam.group2.seaspray.data.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.util.LinkedList;
-import java.util.List;
 import javax.swing.*;
+import uk.ac.cam.group2.seaspray.data.*;
 
 public class SearchEntry extends JPanel {
     private JLabel text;

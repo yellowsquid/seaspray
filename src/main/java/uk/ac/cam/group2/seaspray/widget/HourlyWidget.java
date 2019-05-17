@@ -2,20 +2,15 @@ package uk.ac.cam.group2.seaspray.widget;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-
+import java.awt.GridBagLayout;
 import java.io.IOException;
 import java.io.UncheckedIOException;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import uk.ac.cam.group2.seaspray.data.HourlyData;
 
-/**
- * Displays time, wind, temperature, and wave height and direction.
- */
+/** Displays time, wind, temperature, and wave height and direction. */
 public class HourlyWidget extends JPanel {
     public HourlyWidget(HourlyData h) {
         setLayout(new GridBagLayout());
@@ -30,7 +25,7 @@ public class HourlyWidget extends JPanel {
         c.weightx = 0.5;
         c.fill = GridBagConstraints.VERTICAL;
         c.anchor = GridBagConstraints.EAST;
-        String clockTime = (int)(h.getTime()/100) + ":00";
+        String clockTime = (int) (h.getTime() / 100) + ":00";
 
         if (clockTime.length() == 4) {
             clockTime = "0" + clockTime;
@@ -52,7 +47,7 @@ public class HourlyWidget extends JPanel {
         c.weightx = 0.5;
         c.fill = GridBagConstraints.VERTICAL;
         c.anchor = GridBagConstraints.CENTER;
-        JLabel temp = new JLabel(h.getTempC()  + "\u00B0" + "C");
+        JLabel temp = new JLabel(h.getTempC() + "\u00B0" + "C");
         add(temp, c);
 
         // Wave height
@@ -60,7 +55,7 @@ public class HourlyWidget extends JPanel {
         c.weightx = 0.5;
         c.fill = GridBagConstraints.VERTICAL;
         c.anchor = GridBagConstraints.EAST;
-        String waveLabel = String.format("%03.1f ft", h.getSigHeight()*3.28);
+        String waveLabel = String.format("%03.1f ft", h.getSigHeight() * 3.28);
         JLabel wave = new JLabel(waveLabel);
         add(wave, c);
 

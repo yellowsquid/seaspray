@@ -12,7 +12,7 @@ public class WindData {
         return directionDeg;
     }
 
-    public WindData(int speed, int dir){
+    public WindData(int speed, int dir) {
         windSpeedKph = speed;
         directionDeg = dir;
     }

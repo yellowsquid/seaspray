@@ -1,21 +1,13 @@
 package uk.ac.cam.group2.seaspray.widget;
 
-import javax.swing.*;
-
-import uk.ac.cam.group2.seaspray.data.Condition;
-import uk.ac.cam.group2.seaspray.data.CurrentData;
-import uk.ac.cam.group2.seaspray.data.TideData;
-
 import java.awt.*;
-
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.util.LinkedList;
+import javax.swing.*;
+import uk.ac.cam.group2.seaspray.data.Condition;
+import uk.ac.cam.group2.seaspray.data.CurrentData;
 
-/**
- * Current conditions
- * FIXME: I do nothing.
- */
+/** Current conditions FIXME: I do nothing. */
 // should have: WindObject,
 public class CurrentPanel extends JPanel {
     public CurrentPanel(CurrentData currentData) {
@@ -74,7 +66,7 @@ public class CurrentPanel extends JPanel {
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.CENTER;
         c.fill = GridBagConstraints.BOTH;
-        add(new WindWidget(currentData.getWind()),c);
+        add(new WindWidget(currentData.getWind()), c);
         // TODO: Adjust font size
 
         // Wave height
@@ -87,7 +79,7 @@ public class CurrentPanel extends JPanel {
         c.fill = GridBagConstraints.VERTICAL;
         JLabel wave = new JLabel(currentData.getSigWaveHeightFt() + " ft");
         // TODO: Adjust font size
-        add(wave,c);
+        add(wave, c);
 
         // Waviness Icon
         // FIXME: shows wrong iconset
@@ -120,7 +112,7 @@ public class CurrentPanel extends JPanel {
         c.fill = GridBagConstraints.BOTH;
         // FIXME: missing tide data
         TidePanel tideText = new TidePanel(currentData.getTides());
-        //JLabel tideText = new JLabel("Tides stuff here");
+        // JLabel tideText = new JLabel("Tides stuff here");
         add(tideText, c);
 
         // Sunrise and sunset

@@ -2,32 +2,21 @@ package uk.ac.cam.group2.seaspray;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import java.io.IOException;
 import java.io.UncheckedIOException;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import uk.ac.cam.group2.seaspray.search.*;
 import uk.ac.cam.group2.seaspray.data.*;
+import uk.ac.cam.group2.seaspray.search.*;
 import uk.ac.cam.group2.seaspray.widget.*;
-
 
 public class SeaSpray extends JFrame {
     private SearchPanel searchPanel; // search screen
@@ -53,24 +42,26 @@ public class SeaSpray extends JFrame {
 
         // header button functionality
         try {
-            getLocationButton = new IconButtonWidget("src/main/resources/map.png",
-                                                     this::findCurrentLocation);
+            getLocationButton =
+                    new IconButtonWidget("src/main/resources/map.png", this::findCurrentLocation);
         } catch (IOException e) {
             throw new UncheckedIOException("Missing map icon", e);
         }
 
         try {
-            goSearchButton = new IconButtonWidget("src/main/resources/search.png",
-                                                  this::switchToSearch);
+            goSearchButton = new IconButtonWidget("src/main/resources/search.png", this::switchToSearch);
         } catch (IOException e) {
             throw new UncheckedIOException("Missing search icon", e);
         }
 
         try {
-            returnButton = new IconButtonWidget("src/main/resources/back.png", () -> {
-                    loadLocation(currentCoords[0], currentCoords[1], locationName);
-                    searchPanel.reset();
-            });
+            returnButton =
+                    new IconButtonWidget(
+                            "src/main/resources/back.png",
+                            () -> {
+                                loadLocation(currentCoords[0], currentCoords[1], locationName);
+                                searchPanel.reset();
+                            });
         } catch (IOException e) {
             throw new UncheckedIOException("Missing back icon", e);
         }
@@ -121,7 +112,7 @@ public class SeaSpray extends JFrame {
         locationName = "Cambridge (GB)";
 
         // making sure we're on the main screen
-        ((CardLayout)mainPanel.getLayout()).show(mainPanel, "root");
+        ((CardLayout) mainPanel.getLayout()).show(mainPanel, "root");
         changeHeader(goSearchButton);
 
         update();
@@ -129,39 +120,40 @@ public class SeaSpray extends JFrame {
 
     private void switchToSearch() {
         changeHeader(returnButton);
-        ((CardLayout)mainPanel.getLayout()).next(mainPanel);
+        ((CardLayout) mainPanel.getLayout()).next(mainPanel);
     }
 
-    public void loadLocation(double lo, double la, String name) { // function called by SearchPanel to return to main screen and takes the selected location as an argument
-        currentCoords = new double[]{la, lo};
+    /** Return to main screen and display the location. */
+    public void loadLocation(double lo, double la, String name) {
+        currentCoords = new double[] {la, lo};
         locationName = name;
 
         update();
         changeHeader(goSearchButton);
-        ((CardLayout)mainPanel.getLayout()).next(mainPanel);
+        ((CardLayout) mainPanel.getLayout()).next(mainPanel);
     }
 
     public void update() {
         // rebuild all components
         rootPanel.removeAll();
         List<DailyData> data = GetData.getWeather(currentCoords[0], currentCoords[1]);
-        LinkedList<TideData> tides = GetData.tideTimes(currentCoords[0],currentCoords[1]);
+        LinkedList<TideData> tides = GetData.tideTimes(currentCoords[0], currentCoords[1]);
         rootPanel.add(new CurrentPanel(new CurrentData(data.get(0), tides)));
 
         // Find the 7 hour entries immediately after the current time
         Date current = new Date();
         DateFormat formatter = new SimpleDateFormat("HH");
-        int time = Integer.valueOf(formatter.format(current))*100;
+        int time = Integer.valueOf(formatter.format(current)) * 100;
         List<HourlyData> next7 = new ArrayList<>();
         List<HourlyData> firstDay = data.get(0).getHours();
-        for (HourlyData hd : firstDay){
-            if (hd.getTime() >= time){
+        for (HourlyData hd : firstDay) {
+            if (hd.getTime() >= time) {
                 next7.add(hd);
             }
         }
         firstDay = data.get(1).getHours();
         int i = 0;
-        while (next7.size() < 7){
+        while (next7.size() < 7) {
             next7.add(firstDay.get(i++));
         }
 

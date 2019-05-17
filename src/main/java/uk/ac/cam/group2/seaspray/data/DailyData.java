@@ -1,15 +1,12 @@
 package uk.ac.cam.group2.seaspray.data;
 
-import org.json.JSONObject;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 import java.util.List;
-
-import java.util.stream.IntStream;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import org.json.JSONObject;
 
 public class DailyData {
     private final Date date;
@@ -34,13 +31,14 @@ public class DailyData {
     }
 
     public DailyData(JSONObject day) throws ParseException {
-        this(new SimpleDateFormat("yyyy-MM-dd").parse(day.getString("date")),
-             day.getJSONArray("astronomy").getJSONObject(0).getString("sunrise"),
-             day.getJSONArray("astronomy").getJSONObject(0).getString("sunset"),
-             IntStream.range(0, day.getJSONArray("hourly").length())
-                 .mapToObj(i -> day.getJSONArray("hourly").getJSONObject(i))
-                 .map(o -> new HourlyData(o))
-                 .collect(Collectors.toList()));
+        this(
+                new SimpleDateFormat("yyyy-MM-dd").parse(day.getString("date")),
+                day.getJSONArray("astronomy").getJSONObject(0).getString("sunrise"),
+                day.getJSONArray("astronomy").getJSONObject(0).getString("sunset"),
+                IntStream.range(0, day.getJSONArray("hourly").length())
+                        .mapToObj(i -> day.getJSONArray("hourly").getJSONObject(i))
+                        .map(o -> new HourlyData(o))
+                        .collect(Collectors.toList()));
     }
 
     public DailyData(Date date, String sunrise, String sunset, List<HourlyData> hourlyData) {

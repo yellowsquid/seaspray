@@ -1,7 +1,7 @@
 package uk.ac.cam.group2.seaspray.widget;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class Header extends JPanel {
     private IconButtonWidget leftButton;
@@ -11,7 +11,7 @@ public class Header extends JPanel {
     private final Color buttonColor = Color.decode("#afeeee");
     private final Color headerColor = Color.decode("#189BD3");
 
-    public Header (IconButtonWidget left, IconButtonWidget right, String text)  {
+    public Header(IconButtonWidget left, IconButtonWidget right, String text) {
         leftButton = left;
         rightButton = right;
 

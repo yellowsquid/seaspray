@@ -1,17 +1,11 @@
 package uk.ac.cam.group2.seaspray.widget;
 
 import java.awt.*;
-
 import java.util.List;
-
 import javax.swing.*;
-
 import uk.ac.cam.group2.seaspray.data.HourlyData;
 
-/**
- * Conditions for next 24 hours.
- * FIXME: I do nothing.
- */
+/** Conditions for next 24 hours. FIXME: I do nothing. */
 public class HourlyPanel extends JPanel {
     public HourlyPanel(List<HourlyData> hourlyDatas) {
         setLayout(new GridBagLayout());

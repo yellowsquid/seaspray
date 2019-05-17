@@ -1,34 +1,24 @@
 package uk.ac.cam.group2.seaspray;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.LayoutManager;
-import java.awt.Point;
-
 import java.awt.event.MouseEvent;
-
 import java.util.Timer;
 import java.util.TimerTask;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
 import javax.swing.event.MouseInputListener;
 
-public class ScrollLayoutManager
-        implements LayoutManager, MouseInputListener{
+public class ScrollLayoutManager implements LayoutManager, MouseInputListener {
     private static final long VELOCITY_CALC_MILLIS = 1;
     private static final double VELOCITY_DECAY = 0.995;
 
     private final Container parent;
     private double velocity; // Pixels per millisecond
     private double position; // Pixels
-    private long lastTime;       // Last click event
+    private long lastTime; // Last click event
     private double lastPosition; // Coords of last click
-    private Timer timer;    // Velocity update
+    private Timer timer; // Velocity update
 
     public ScrollLayoutManager(Container parent) {
         this.parent = parent;
@@ -143,20 +133,21 @@ public class ScrollLayoutManager
 
         // Start the movement timer.
         timer = new Timer();
-        timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    translate(velocity * VELOCITY_CALC_MILLIS);
-                    parent.repaint();
-                    decayVelocity();
+        timer.schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        translate(velocity * VELOCITY_CALC_MILLIS);
+                        parent.repaint();
+                        decayVelocity();
 
-                    if (hasStopped()) {
-                        timer.cancel();
+                        if (hasStopped()) {
+                            timer.cancel();
+                        }
                     }
-                }
-            },
-            0, // Start moving immediately
-            VELOCITY_CALC_MILLIS);
+                },
+                0, // Start moving immediately
+                VELOCITY_CALC_MILLIS);
     }
 
     // Called when the mouse is dragged.
@@ -210,22 +201,19 @@ public class ScrollLayoutManager
         layoutContainer(parent);
     }
 
-    /**
-     * Decays the velocity. Simulates resistance when scrolling.
-     */
+    /** Decays the velocity. Simulates resistance when scrolling. */
     public void decayVelocity() {
         velocity *= VELOCITY_DECAY;
     }
 
     /**
-     * Has the panel stopped scrolling. It has stopped if it is moving at less
-     * than 10 pixels per second in both the x and y directions.
-     *
-     * NOTE: if the panel has stopped according to above, the panel is
-     * forcefully stopped.
-     *
-     * @returns {@code true} if the panel is stationary.
-     */
+    * Has the panel stopped scrolling. It has stopped if it is moving at less than 10 pixels per
+    * second in both the x and y directions.
+    *
+    * <p>NOTE: if the panel has stopped according to above, the panel is forcefully stopped.
+    *
+    * @returns {@code true} if the panel is stationary.
+    */
     public boolean hasStopped() {
         if ((velocity < 1e-2) && (velocity > -1e-2)) {
             velocity = 0;

@@ -2,7 +2,6 @@ package uk.ac.cam.group2.seaspray.data;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class TideData {
@@ -17,13 +16,13 @@ public class TideData {
         return high;
     }
 
-    public String getTimeString(){
+    public String getTimeString() {
         String format = "HH:mm";
         SimpleDateFormat form = new SimpleDateFormat(format);
         return form.format(time);
     }
 
-    public TideData(String date, String type){
+    public TideData(String date, String type) {
         high = type.equals("High") ? true : false;
         String format = "YYYY-MM-dd'T'HH:mm+SSSS";
         SimpleDateFormat form = new SimpleDateFormat(format);
@@ -32,11 +31,10 @@ public class TideData {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public static void main(String[] args) {
-        TideData d = new TideData("2019-05-16T09:24+0000","High");
+        TideData d = new TideData("2019-05-16T09:24+0000", "High");
 
         System.out.println(d.getTimeString());
     }

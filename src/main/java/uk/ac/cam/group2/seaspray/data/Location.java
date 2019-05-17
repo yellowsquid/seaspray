@@ -10,7 +10,6 @@ public class Location {
 
     // TODO: worldtides.info
 
-
     public String getName() {
         return name;
     }
@@ -27,14 +26,15 @@ public class Location {
         return country;
     }
 
-    public Location (JSONObject o){
+    public Location(JSONObject o) {
         name = o.getString("name");
         lat = o.getJSONObject("coord").getDouble("lat");
         lon = o.getJSONObject("coord").getDouble("lon");
         country = o.getJSONObject("sys").getString("country");
         JSONArray w = o.getJSONArray("weather");
     }
-    public String toString(){
+
+    public String toString() {
         return name + " (" + country + ")";
     }
 }

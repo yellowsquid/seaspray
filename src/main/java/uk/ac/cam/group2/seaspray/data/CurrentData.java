@@ -15,7 +15,7 @@ public class CurrentData {
     private LinkedList<TideData> tides;
 
     // TODO: Build current data
-    public CurrentData(DailyData d, LinkedList<TideData> tides){
+    public CurrentData(DailyData d, LinkedList<TideData> tides) {
         this.tides = tides;
         sunRise = d.getSunrise();
         sunSet = d.getSunset();
@@ -24,10 +24,10 @@ public class CurrentData {
         // TODO: Interpolate? May require next day if near midnight
         Date now = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("HH");
-        int time = Integer.valueOf(formatter.format(now))*100;
+        int time = Integer.valueOf(formatter.format(now)) * 100;
         int i = 0;
         HourlyData justGone = d.getHours().get(i);
-        while (i < d.getHours().size()-1 && justGone.getTime()< time-300){
+        while (i < d.getHours().size() - 1 && justGone.getTime() < time - 300) {
             justGone = d.getHours().get(++i);
         }
 
@@ -46,7 +46,7 @@ public class CurrentData {
         return TempC;
     }
 
-    public double getWaveDir(){
+    public double getWaveDir() {
         return waveDir;
     }
 
@@ -66,5 +66,7 @@ public class CurrentData {
         return weatherCode;
     }
 
-    public LinkedList<TideData> getTides() {return tides;}
+    public LinkedList<TideData> getTides() {
+        return tides;
+    }
 }

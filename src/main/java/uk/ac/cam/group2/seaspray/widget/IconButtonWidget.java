@@ -2,7 +2,6 @@ package uk.ac.cam.group2.seaspray.widget;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import java.io.IOException;
 
 public class IconButtonWidget extends IconWidget implements MouseListener {

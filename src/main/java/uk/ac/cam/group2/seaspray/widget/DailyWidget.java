@@ -1,23 +1,19 @@
 package uk.ac.cam.group2.seaspray.widget;
 
-import javax.swing.*;
-
-import uk.ac.cam.group2.seaspray.data.*;
-
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.text.*;
-import java.util.Date;
+import javax.swing.*;
+import uk.ac.cam.group2.seaspray.data.*;
 
 public class DailyWidget extends JPanel {
-    public static String dayOfWeek(DailyData d){
+    public static String dayOfWeek(DailyData d) {
         String day;
         DateFormat format2 = new SimpleDateFormat("EE");
         return format2.format(d.getDate());
     }
 
-    public DailyWidget (DailyData d){
+    public DailyWidget(DailyData d) {
         setLayout(new GridBagLayout());
         setBackground(Color.WHITE);
         GridBagConstraints c = new GridBagConstraints();
@@ -30,15 +26,15 @@ public class DailyWidget extends JPanel {
         JLabel title = new JLabel(dayOfWeek(d));
         Font labelFont = title.getFont();
         title.setFont(new Font(labelFont.getName(), Font.BOLD, 18));
-        add(title,c);
+        add(title, c);
 
         c.weighty = 1.0;
         c.gridy = 1;
         c.ipadx = 0;
         c.fill = GridBagConstraints.BOTH;
-        add(new HourlyWidget(d.getHours().get(3)),c);
+        add(new HourlyWidget(d.getHours().get(3)), c);
 
         c.gridy = 2;
-        add(new HourlyWidget(d.getHours().get(5)),c);
+        add(new HourlyWidget(d.getHours().get(5)), c);
     }
 }

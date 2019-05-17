@@ -7,6 +7,9 @@ plugins {
 
     // Package as a jar.
     id 'com.github.johnrengelman.shadow' version '5.0.0'
+
+    // Apply consistent style.
+    id 'com.diffplug.gradle.spotless' version '3.23.0'
 }
 
 repositories {
@@ -19,6 +22,17 @@ dependencies {
     // This dependency is found on compile classpath of this component and consumers.
     implementation 'org.json:json:20180813'
 }
+
+spotless {
+    java {
+        googleJavaFormat()
+        paddedCell()
+        indentWithTabs(2) // Workaround for correct spacing
+        indentWithSpaces(4)
+    }
+}
+
+run.dependsOn 'spotlessApply'
 
 // Define the main class for the application
 mainClassName = 'uk.ac.cam.group2.seaspray.SeaSpray'

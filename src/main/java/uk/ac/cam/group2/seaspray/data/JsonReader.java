@@ -8,10 +8,10 @@ import java.util.*;
 import org.json.*;
 
 public class JsonReader {
-    public static List<DailyData> readData(JSONObject o){
+    public static List<DailyData> readData(JSONObject o) {
         JSONArray days = o.getJSONObject("data").getJSONArray("weather");
         List<DailyData> response = new ArrayList<>();
-        for (int i = 0; i < days.length(); i++){
+        for (int i = 0; i < days.length(); i++) {
             try {
                 response.add(new DailyData(days.getJSONObject(i)));
             } catch (ParseException e) {
