@@ -5,12 +5,10 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
+import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -139,30 +137,23 @@ public class SeaSpray extends JFrame {
     public void update() {
         // rebuild all components
         rootPanel.removeAll();
-        List<DailyData> data = GetData.getWeather(currentCoords[0], currentCoords[1]);
-        LinkedList<TideData> tides = GetData.tideTimes(currentCoords[0], currentCoords[1]);
-        rootPanel.add(new CurrentPanel(new CurrentData(data.get(0), tides)));
+        List<DailyData> dailyData = GetData.getWeather(currentCoords[0], currentCoords[1]);
+        List<TideData> tides = GetData.tideTimes(currentCoords[0], currentCoords[1]);
+        rootPanel.add(new CurrentPanel(new CurrentData(dailyData.get(0), tides)));
 
         // Find the 7 hour entries immediately after the current time
-        Date current = new Date();
-        DateFormat formatter = new SimpleDateFormat("HH");
-        int time = Integer.valueOf(formatter.format(current)) * 100;
-        List<HourlyData> next7 = new ArrayList<>();
-        List<HourlyData> firstDay = data.get(0).getHours();
-        for (HourlyData hd : firstDay) {
-            if (hd.getTime() >= time) {
-                next7.add(hd);
-            }
-        }
-        firstDay = data.get(1).getHours();
-        int i = 0;
-        while (next7.size() < 7) {
-            next7.add(firstDay.get(i++));
-        }
+        Calendar time = Calendar.getInstance();
 
-        rootPanel.add(new HourlyPanel(next7));
-
-        rootPanel.add(new WeeklyPanel(data));
+        List<HourlyData> next24Hours =
+                dailyData.stream()
+                        .map(DailyData::getHours)
+                        .flatMap(Collection::stream)
+                        .filter(hourly -> hourly.getTime().after(time))
+                        .limit(7)
+                        .collect(Collectors.toList());
+        List<HourlyData> firstDay = dailyData.get(0).getHours();
+        rootPanel.add(new HourlyPanel(next24Hours));
+        rootPanel.add(new WeeklyPanel(dailyData));
     }
 
     public static void main(String[] args) {

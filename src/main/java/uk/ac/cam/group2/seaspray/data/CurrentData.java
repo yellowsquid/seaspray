@@ -21,12 +21,12 @@ public class CurrentData {
 
         // get current data from most recent hour element
         // TODO: Interpolate? May require next day if near midnight
-        int time = 100 * Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-
+        Calendar target = Calendar.getInstance();
+        target.add(Calendar.HOUR_OF_DAY, -3);
         HourlyData justGone = null;
 
         for (HourlyData hourlyData : d.getHours()) {
-            if (hourlyData.getTime() > time - 300) {
+            if (hourlyData.getTime().after(target)) {
                 justGone = hourlyData;
                 break;
             }

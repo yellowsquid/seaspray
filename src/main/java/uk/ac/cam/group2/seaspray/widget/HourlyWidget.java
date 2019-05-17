@@ -25,12 +25,7 @@ public class HourlyWidget extends JPanel {
         c.weightx = 0.5;
         c.fill = GridBagConstraints.VERTICAL;
         c.anchor = GridBagConstraints.EAST;
-        String clockTime = (int) (h.getTime() / 100) + ":00";
-
-        if (clockTime.length() == 4) {
-            clockTime = "0" + clockTime;
-        }
-
+        String clockTime = String.format("%tH:%tM", h.getTime(), h.getTime());
         JLabel time = new JLabel(clockTime);
         add(time, c);
 
