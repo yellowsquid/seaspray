@@ -26,8 +26,8 @@ public class SeaSpray extends JFrame {
     private JPanel header; // actual header inside the panel
 
     // header buttons
-    private IconButtonWidget getLocationButton;
-    private IconButtonWidget goSearchButton;
+    private IconButtonWidget currentLocationButton;
+    private IconButtonWidget searchButton;
     private IconButtonWidget returnButton;
 
     // current location information
@@ -42,14 +42,16 @@ public class SeaSpray extends JFrame {
 
         // header button functionality
         try {
-            getLocationButton =
+            currentLocationButton =
                     new IconButtonWidget("src/main/resources/map.png", this::findCurrentLocation);
+            currentLocationButton.setAlignment(IconWidget.WEST);
         } catch (IOException e) {
             throw new UncheckedIOException("Missing map icon", e);
         }
 
         try {
-            goSearchButton = new IconButtonWidget("src/main/resources/search.png", this::switchToSearch);
+            searchButton = new IconButtonWidget("src/main/resources/search.png", this::switchToSearch);
+            searchButton.setAlignment(IconWidget.EAST);
         } catch (IOException e) {
             throw new UncheckedIOException("Missing search icon", e);
         }
@@ -62,6 +64,7 @@ public class SeaSpray extends JFrame {
                                 loadLocation(currentCoords[0], currentCoords[1], locationName);
                                 searchPanel.reset();
                             });
+            returnButton.setAlignment(IconWidget.EAST);
         } catch (IOException e) {
             throw new UncheckedIOException("Missing back icon", e);
         }
@@ -86,7 +89,7 @@ public class SeaSpray extends JFrame {
 
         // CURRENT, HOURLY, WEEKLY data
         findCurrentLocation();
-        changeHeader(goSearchButton);
+        changeHeader(searchButton);
 
         // adding everything together
         add(headerPanel);
@@ -98,7 +101,7 @@ public class SeaSpray extends JFrame {
     }
 
     private void changeHeader(IconButtonWidget b) {
-        header = new Header(getLocationButton, b, locationName);
+        header = new Header(currentLocationButton, b, locationName);
         headerPanel.removeAll();
         headerPanel.add(header, BorderLayout.CENTER);
         headerPanel.revalidate();
@@ -113,7 +116,7 @@ public class SeaSpray extends JFrame {
 
         // making sure we're on the main screen
         ((CardLayout) mainPanel.getLayout()).show(mainPanel, "root");
-        changeHeader(goSearchButton);
+        changeHeader(searchButton);
 
         update();
     }
@@ -129,7 +132,7 @@ public class SeaSpray extends JFrame {
         locationName = name;
 
         update();
-        changeHeader(goSearchButton);
+        changeHeader(searchButton);
         ((CardLayout) mainPanel.getLayout()).next(mainPanel);
     }
 
