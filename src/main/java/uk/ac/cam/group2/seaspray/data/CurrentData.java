@@ -1,39 +1,44 @@
 package uk.ac.cam.group2.seaspray.data;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
+import java.util.Calendar;
+import java.util.List;
 
 public class CurrentData {
-    private WindData wind;
-    private double TempC;
-    private double sigWaveHeightFt;
-    private String sunRise; // TODO: Change to date or ensure parsed as time string
-    private String sunSet;
-    private int weatherCode;
-    private int waveDir;
-    private LinkedList<TideData> tides;
+    private final WindData wind;
+    private final int tempC;
+    private final double sigWaveHeight;
+    private final String sunRise; // TODO: Change to date or ensure parsed as time string
+    private final String sunSet;
+    private final int weatherCode;
+    private final int waveDir;
+    private final List<TideData> tides;
 
     // TODO: Build current data
-    public CurrentData(DailyData d, LinkedList<TideData> tides) {
+    public CurrentData(DailyData d, List<TideData> tides) {
         this.tides = tides;
         sunRise = d.getSunrise();
         sunSet = d.getSunset();
 
         // get current data from most recent hour element
         // TODO: Interpolate? May require next day if near midnight
-        Date now = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("HH");
-        int time = Integer.valueOf(formatter.format(now)) * 100;
-        int i = 0;
-        HourlyData justGone = d.getHours().get(i);
-        while (i < d.getHours().size() - 1 && justGone.getTime() < time - 300) {
-            justGone = d.getHours().get(++i);
+        int time = 100 * Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+
+        HourlyData justGone = null;
+
+        for (HourlyData hourlyData : d.getHours()) {
+            if (hourlyData.getTime() > time - 300) {
+                justGone = hourlyData;
+                break;
+            }
+        }
+
+        if (justGone == null) {
+            throw new AssertionError("Didn't get recent enough data.");
         }
 
         wind = justGone.getWind();
-        TempC = justGone.getTempC();
-        sigWaveHeightFt = justGone.getSigHeight();
+        tempC = justGone.getTempC();
+        sigWaveHeight = justGone.getSigHeight();
         weatherCode = justGone.getWeatherCode();
         waveDir = justGone.getSwellDeg();
     }
@@ -42,16 +47,16 @@ public class CurrentData {
         return wind;
     }
 
-    public double getTempC() {
-        return TempC;
+    public int getTempC() {
+        return tempC;
     }
 
     public double getWaveDir() {
         return waveDir;
     }
 
-    public double getSigWaveHeightFt() {
-        return sigWaveHeightFt;
+    public double getSigWaveHeight() {
+        return sigWaveHeight;
     }
 
     public String getSunRise() {
@@ -66,7 +71,7 @@ public class CurrentData {
         return weatherCode;
     }
 
-    public LinkedList<TideData> getTides() {
-        return tides;
+    public List<TideData> getTides() {
+        return List.copyOf(tides);
     }
 }

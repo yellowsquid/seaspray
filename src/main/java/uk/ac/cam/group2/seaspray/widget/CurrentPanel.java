@@ -54,7 +54,8 @@ public class CurrentPanel extends JPanel {
         c.gridwidth = 1;
         c.anchor = GridBagConstraints.EAST;
         c.fill = GridBagConstraints.VERTICAL;
-        JLabel tempC = new JLabel(String.valueOf(currentData.getTempC() + "\u00B0" + "C"));
+        String tempLabel = String.format("% 3d\u00B0C", currentData.getTempC());
+        JLabel tempC = new JLabel(tempLabel);
         // TODO: Adjust font size
         add(tempC, c);
 
@@ -82,7 +83,8 @@ public class CurrentPanel extends JPanel {
         c.gridwidth = 1;
         c.anchor = GridBagConstraints.WEST;
         c.fill = GridBagConstraints.VERTICAL;
-        JLabel wave = new JLabel(currentData.getSigWaveHeightFt() + " ft");
+        String waveLabel = String.format("% 4.1f ft", currentData.getSigWaveHeight() * 3.28);
+        JLabel wave = new JLabel(waveLabel);
         // TODO: Adjust font size
         add(wave, c);
 

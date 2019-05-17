@@ -52,7 +52,8 @@ public class HourlyWidget extends JPanel {
         c.weightx = 0.5;
         c.fill = GridBagConstraints.VERTICAL;
         c.anchor = GridBagConstraints.CENTER;
-        JLabel temp = new JLabel(h.getTempC() + "\u00B0" + "C");
+        String tempLabel = String.format("% 3d\u00B0C", h.getTempC());
+        JLabel temp = new JLabel(tempLabel);
         add(temp, c);
 
         // Wave height
@@ -60,7 +61,7 @@ public class HourlyWidget extends JPanel {
         c.weightx = 0.5;
         c.fill = GridBagConstraints.VERTICAL;
         c.anchor = GridBagConstraints.EAST;
-        String waveLabel = String.format("%03.1f ft", h.getSigHeight() * 3.28);
+        String waveLabel = String.format("% 4.1f ft", h.getSigHeight() * 3.28);
         JLabel wave = new JLabel(waveLabel);
         add(wave, c);
 
