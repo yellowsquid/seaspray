@@ -66,7 +66,12 @@ public class CurrentPanel extends JPanel {
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.CENTER;
         c.fill = GridBagConstraints.BOTH;
-        add(new WindWidget(currentData.getWind()), c);
+
+        try {
+            add(new WindWidget(currentData.getWind()), c);
+        } catch (IOException e) {
+            throw new UncheckedIOException("Cannot find wind icon.", e);
+        }
         // TODO: Adjust font size
 
         // Wave height

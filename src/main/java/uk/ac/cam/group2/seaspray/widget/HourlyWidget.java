@@ -39,8 +39,13 @@ public class HourlyWidget extends JPanel {
         c.weightx = 1;
         c.fill = GridBagConstraints.BOTH;
         c.anchor = GridBagConstraints.CENTER;
-        WindWidget wind = new WindWidget(h.getWind());
-        add(wind, c);
+
+        try {
+            WindWidget wind = new WindWidget(h.getWind());
+            add(wind, c);
+        } catch (IOException e) {
+            throw new UncheckedIOException("Cannot load wind icon.", e);
+        }
 
         // Temperature
         c.gridx = 2;
