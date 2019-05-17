@@ -148,7 +148,7 @@ public class SearchPanel extends JPanel {
         }
         recents.add(0, l); // add the new selection to the recents list
 
-        source.loadLocation(l.getLon(), l.getLat(), l.toString());
+        source.loadLocation(l);
 
         // go back to showing the recent list
         reset();

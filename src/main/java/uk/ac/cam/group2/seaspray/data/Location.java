@@ -3,38 +3,40 @@ package uk.ac.cam.group2.seaspray.data;
 import org.json.*;
 
 public class Location {
-    private String name;
-    private double lat;
-    private double lon;
-    private String country;
+    public final String name;
+    public final double lat;
+    public final double lon;
+    public final String country;
 
     // TODO: worldtides.info
 
-    public String getName() {
-        return name;
-    }
-
-    public double getLat() {
-        return lat;
-    }
-
-    public double getLon() {
-        return lon;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
     public Location(JSONObject o) {
-        name = o.getString("name");
-        lat = o.getJSONObject("coord").getDouble("lat");
-        lon = o.getJSONObject("coord").getDouble("lon");
-        country = o.getJSONObject("sys").getString("country");
-        JSONArray w = o.getJSONArray("weather");
+        this(
+                o.getString("name"),
+                o.getJSONObject("coord").getDouble("lat"),
+                o.getJSONObject("coord").getDouble("lon"),
+                o.getJSONObject("sys").getString("country"));
     }
 
+    public Location(String name, double lat, double lon, String country) {
+        this.name = name;
+        this.lat = lat;
+        this.lon = lon;
+        this.country = country;
+    }
+
+    @Override
     public String toString() {
         return name + " (" + country + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o.getClass() != Location.class) {
+            return false;
+        }
+
+        Location l = (Location) o;
+        return name.equals(l.name) && country.equals(l.country);
     }
 }

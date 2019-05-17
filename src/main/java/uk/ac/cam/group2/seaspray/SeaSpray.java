@@ -29,8 +29,7 @@ public class SeaSpray extends JFrame {
     private IconButtonWidget returnButton;
 
     // current location information
-    private double[] currentCoords; // latitude, longitude
-    private String locationName;
+    private Location location;
 
     public SeaSpray() {
         super("SeaSpray");
@@ -59,7 +58,7 @@ public class SeaSpray extends JFrame {
                     new IconButtonWidget(
                             "src/main/resources/back.png",
                             () -> {
-                                loadLocation(currentCoords[0], currentCoords[1], locationName);
+                                loadLocation(location);
                                 searchPanel.reset();
                             });
             returnButton.setAlignment(IconWidget.EAST);
@@ -99,7 +98,7 @@ public class SeaSpray extends JFrame {
     }
 
     private void changeHeader(IconButtonWidget b) {
-        header = new Header(currentLocationButton, b, locationName);
+        header = new Header(currentLocationButton, b, location.toString());
         headerPanel.removeAll();
         headerPanel.add(header, BorderLayout.CENTER);
         headerPanel.revalidate();
@@ -109,8 +108,7 @@ public class SeaSpray extends JFrame {
     private void findCurrentLocation() {
         // TODO: finding location of user
         System.out.println("Getting local information");
-        currentCoords = GetData.localWeather();
-        locationName = "Cambridge (GB)";
+        location = GetData.getCurrentLocation();
 
         // making sure we're on the main screen
         ((CardLayout) mainPanel.getLayout()).show(mainPanel, "root");
@@ -125,9 +123,8 @@ public class SeaSpray extends JFrame {
     }
 
     /** Return to main screen and display the location. */
-    public void loadLocation(double lo, double la, String name) {
-        currentCoords = new double[] {la, lo};
-        locationName = name;
+    public void loadLocation(Location location) {
+        this.location = location;
 
         update();
         changeHeader(searchButton);
@@ -137,9 +134,8 @@ public class SeaSpray extends JFrame {
     public void update() {
         // rebuild all components
         rootPanel.removeAll();
-        List<DailyData> dailyData = GetData.getWeather(currentCoords[0], currentCoords[1]);
-        List<TideData> tides = GetData.tideTimes(currentCoords[0], currentCoords[1]);
-        rootPanel.add(new CurrentPanel(new CurrentData(dailyData.get(0), tides)));
+        List<DailyData> dailyData = GetData.getWeather(location);
+        List<TideData> tides = GetData.tideTimes(location);
 
         // Find the 7 hour entries immediately after the current time
         Calendar time = Calendar.getInstance();
@@ -152,6 +148,9 @@ public class SeaSpray extends JFrame {
                         .limit(7)
                         .collect(Collectors.toList());
         List<HourlyData> firstDay = dailyData.get(0).getHours();
+
+        // add to the panel.
+        rootPanel.add(new CurrentPanel(new CurrentData(dailyData.get(0), tides)));
         rootPanel.add(new HourlyPanel(next24Hours));
         rootPanel.add(new WeeklyPanel(dailyData));
     }

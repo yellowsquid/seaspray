@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import org.json.JSONObject;
 
 public class DailyData {
@@ -36,8 +35,7 @@ public class DailyData {
         this.sunrise = day.getJSONArray("astronomy").getJSONObject(0).getString("sunrise");
         this.sunset = day.getJSONArray("astronomy").getJSONObject(0).getString("sunset");
         this.hours =
-                IntStream.range(0, day.getJSONArray("hourly").length())
-                        .mapToObj(i -> day.getJSONArray("hourly").getJSONObject(i))
+                GetData.arrayToStream(day.getJSONArray("hourly"))
                         .map(o -> new HourlyData(o, this.date))
                         .collect(Collectors.toList());
     }
