@@ -6,10 +6,13 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class IconWidget extends JPanel {
+    private static final Map<String, Image> CACHE = new HashMap<>();
     // Bit flags for alignment
     public static final int NONE = 0;
     public static final int NORTH = 1;
@@ -28,6 +31,16 @@ public class IconWidget extends JPanel {
         this.image = image;
         this.alignment = NONE;
         setBackground(Color.WHITE);
+    }
+
+    private static Image readImage(String path) throws IOException {
+        if (CACHE.containsKey(path)) {
+            return CACHE.get(path);
+        }
+
+        Image image = ImageIO.read(new File(path));
+        CACHE.put(path, image);
+        return image;
     }
 
     public void setAlignment(int alignment) {
