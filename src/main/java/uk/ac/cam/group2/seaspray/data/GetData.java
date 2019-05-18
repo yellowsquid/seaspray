@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class GetData {
-    private static final String TIDE_KEY = "10f60b65-d8ff-452c-b680-d9dd8c98bbaa";
+    private static final String TIDE_KEY = "6ec0ef65-27ef-4387-9a7b-35d50f4b1706";
     private static final String MARINE_KEY = "7ec22fe9f839499e8c7122127193004";
     private static final String SEARCH_KEY = "f4c78c6cc6d74b4862713c5f05505174";
     private static final String TIDE_BASE = "http://www.worldtides.info/api";
@@ -17,7 +17,7 @@ public class GetData {
     private static final String SEARCH_BASE = "http://api.openweathermap.org/data/2.5/find";
 
     public static Stream<JSONObject> arrayToStream(JSONArray array) {
-        return IntStream.range(0, array.length()).mapToObj(i -> array.getJSONObject(i));
+        return IntStream.range(0, array.length()).mapToObj(array::getJSONObject);
     }
 
     public static List<TideData> tideTimes(Location location) {
