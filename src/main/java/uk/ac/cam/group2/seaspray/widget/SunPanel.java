@@ -1,11 +1,13 @@
 package uk.ac.cam.group2.seaspray.widget;
 
-import uk.ac.cam.group2.seaspray.data.TideData;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.io.IOException;
-import java.util.List;
+import java.io.UncheckedIOException;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class SunPanel extends JPanel {
     public SunPanel(String sunRise, String sunSet) {
@@ -19,24 +21,29 @@ public class SunPanel extends JPanel {
         c.weightx = 1;
         c.fill = GridBagConstraints.NONE;
 
-        IconWidget RiseIm = null;
-        IconWidget SetIm = null;
+        IconWidget riseIcon = null;
+        IconWidget setIcon = null;
+
         try {
-            RiseIm = new IconWidget("src/main/resources/sunrise.png");
-            SetIm = new IconWidget("src/main/resources/sunset.png");
-        } catch (IOException e){
-            e.printStackTrace();
+            riseIcon = new IconWidget("src/main/resources/sunrise.png");
+            riseIcon.setAlignment(IconWidget.EAST);
+            riseIcon.setPreferredSize(new Dimension(100, 100));
+            setIcon = new IconWidget("src/main/resources/sunset.png");
+            riseIcon.setAlignment(IconWidget.EAST);
+            setIcon.setPreferredSize(new Dimension(100, 100));
+        } catch (IOException e) {
+            throw new UncheckedIOException("Failed to load sunrise/set icons.", e);
         }
+
         JLabel upTime = new JLabel(sunRise);
         JLabel downTime = new JLabel(sunSet);
 
-        add(RiseIm,c);
+        add(riseIcon, c);
         c.gridx++;
-        add(upTime,c);
+        add(upTime, c);
         c.gridx++;
-        add(SetIm,c);
+        add(setIcon, c);
         c.gridx++;
-        add(downTime,c);
-
+        add(downTime, c);
     }
 }

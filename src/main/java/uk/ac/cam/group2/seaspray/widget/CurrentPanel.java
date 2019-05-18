@@ -109,7 +109,6 @@ public class CurrentPanel extends JPanel {
         }
 
         // Tides
-        // FIXME: currently static placeholder text
         c.gridx = 0;
         c.gridy = 3;
         c.weightx = 0;
@@ -117,10 +116,8 @@ public class CurrentPanel extends JPanel {
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.CENTER;
         c.fill = GridBagConstraints.BOTH;
-        // FIXME: missing tide data
-        TidePanel tideText = new TidePanel(currentData.getTides());
-        // JLabel tideText = new JLabel("Tides stuff here");
-        add(tideText, c);
+        TidePanel tides = new TidePanel(currentData.getTides());
+        add(tides, c);
 
         // Sunrise and sunset
         // FIXME: currently static placeholder text
@@ -131,8 +128,7 @@ public class CurrentPanel extends JPanel {
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.CENTER;
         c.fill = GridBagConstraints.BOTH;
-        //JLabel sunset = new JLabel("Sunset stuff here");
-        SunPanel sunset = new SunPanel(currentData.getSunRise(),currentData.getSunSet());
+        SunPanel sunset = new SunPanel(currentData.getSunRise(), currentData.getSunSet());
         add(sunset, c);
     }
 }
