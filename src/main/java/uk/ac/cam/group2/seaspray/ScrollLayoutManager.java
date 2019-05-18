@@ -3,17 +3,21 @@ package uk.ac.cam.group2.seaspray;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.LayoutManager;
+import java.awt.LayoutManager2;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.event.MouseInputListener;
 
-public class ScrollLayoutManager implements LayoutManager, MouseInputListener {
+public class ScrollLayoutManager implements LayoutManager2, MouseInputListener {
     private static final long VELOCITY_CALC_MILLIS = 1;
     private static final double VELOCITY_DECAY = 0.995;
 
     private final Container parent;
+    private final Map<Component, Integer> weights;
+    private int totalWeight;
     private double velocity; // Pixels per millisecond
     private double position; // Pixels
     private long lastTime; // Last click event
@@ -30,6 +34,21 @@ public class ScrollLayoutManager implements LayoutManager, MouseInputListener {
         this.lastPosition = 0;
 
         this.timer = null; // Only have a timer when actively updating
+
+        this.weights = new HashMap<>();
+        this.totalWeight = 0;
+    }
+
+    @Override
+    public void addLayoutComponent(Component comp, Object constraints) {
+        if (constraints == null) {
+            constraints = Integer.valueOf(1);
+        } else if (constraints.getClass() != Integer.class) {
+            throw new IllegalArgumentException("Expected an integer");
+        }
+
+        weights.put(comp, (Integer) constraints);
+        totalWeight += (Integer) constraints;
     }
 
     @Override
@@ -39,6 +58,9 @@ public class ScrollLayoutManager implements LayoutManager, MouseInputListener {
 
     @Override
     public void removeLayoutComponent(Component comp) {
+        int weight = weights.get(comp);
+        weights.remove(comp);
+        totalWeight -= weight;
         translate(0);
     }
 
@@ -46,15 +68,19 @@ public class ScrollLayoutManager implements LayoutManager, MouseInputListener {
     public Dimension preferredLayoutSize(Container parent) {
         int width = 0;
         int height = 0;
+
         for (Component comp : parent.getComponents()) {
             Dimension compSize = comp.getPreferredSize();
+            // Higher weighting means smaller height
+            int compWidth = compSize.width / weights.get(comp);
+            int compHeight = compSize.height / weights.get(comp);
 
-            if (compSize.width > width) {
-                width = compSize.width;
+            if (compWidth > width) {
+                width = compWidth;
             }
 
-            if (compSize.height > height) {
-                height = compSize.height;
+            if (compHeight > height) {
+                height = compHeight;
             }
         }
 
@@ -65,19 +91,61 @@ public class ScrollLayoutManager implements LayoutManager, MouseInputListener {
     public Dimension minimumLayoutSize(Container parent) {
         int width = 0;
         int height = 0;
+
         for (Component comp : parent.getComponents()) {
             Dimension compSize = comp.getMinimumSize();
+            // Higher weighting means smaller height
+            int compWidth = compSize.width / weights.get(comp);
+            int compHeight = compSize.height / weights.get(comp);
 
-            if (compSize.width > width) {
-                width = compSize.width;
+            if (compWidth > width) {
+                width = compWidth;
             }
 
-            if (compSize.height > height) {
-                height = compSize.height;
+            if (compHeight > height) {
+                height = compHeight;
             }
         }
 
         return new Dimension(width, height);
+    }
+
+    @Override
+    public Dimension maximumLayoutSize(Container parent) {
+        int width = 0;
+        int height = 0;
+
+        for (Component comp : parent.getComponents()) {
+            Dimension compSize = comp.getMaximumSize();
+            // Higher weighting means smaller height
+            int compWidth = compSize.width / weights.get(comp);
+            int compHeight = compSize.height / weights.get(comp);
+
+            if (compWidth < width) {
+                width = compWidth;
+            }
+
+            if (compHeight < height) {
+                height = compHeight;
+            }
+        }
+
+        return new Dimension(width, height);
+    }
+
+    @Override
+    public float getLayoutAlignmentX(Container target) {
+        return 0.5f;
+    }
+
+    @Override
+    public float getLayoutAlignmentY(Container target) {
+        return 0.5f;
+    }
+
+    @Override
+    public void invalidateLayout(Container target) {
+        return;
     }
 
     @Override
@@ -92,8 +160,8 @@ public class ScrollLayoutManager implements LayoutManager, MouseInputListener {
             if (timer != null) timer.cancel();
         }
 
-        if (position < (1 - components.length) * deltaHeight) {
-            position = (1 - components.length) * parent.getHeight();
+        if (position < (1 - totalWeight) * deltaHeight) {
+            position = (1 - totalWeight) * parent.getHeight();
             velocity = 0;
             if (timer != null) timer.cancel();
         }
@@ -101,7 +169,8 @@ public class ScrollLayoutManager implements LayoutManager, MouseInputListener {
         int currentTop = (int) position;
 
         for (Component component : components) {
-            component.setBounds(0, currentTop, width, deltaHeight);
+            int weight = weights.get(component);
+            component.setBounds(0, currentTop, width, deltaHeight * weight);
             currentTop += deltaHeight;
         }
     }

@@ -150,9 +150,9 @@ public class SeaSpray extends JFrame {
         List<HourlyData> firstDay = dailyData.get(0).getHours();
 
         // add to the panel.
-        rootPanel.add(new CurrentPanel(new CurrentData(dailyData.get(0), tides)));
-        rootPanel.add(new HourlyPanel(next24Hours));
-        rootPanel.add(new WeeklyPanel(dailyData));
+        rootPanel.add(new CurrentPanel(new CurrentData(dailyData.get(0), tides)), Integer.valueOf(1));
+        rootPanel.add(new HourlyPanel(next24Hours), Integer.valueOf(1));
+        rootPanel.add(new WeeklyPanel(dailyData), Integer.valueOf(2));
     }
 
     public static void main(String[] args) {
