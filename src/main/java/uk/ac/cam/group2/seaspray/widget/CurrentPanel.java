@@ -131,7 +131,8 @@ public class CurrentPanel extends JPanel {
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.CENTER;
         c.fill = GridBagConstraints.BOTH;
-        JLabel sunset = new JLabel("Sunset stuff here");
+        //JLabel sunset = new JLabel("Sunset stuff here");
+        SunPanel sunset = new SunPanel(currentData.getSunRise(),currentData.getSunSet());
         add(sunset, c);
     }
 }
