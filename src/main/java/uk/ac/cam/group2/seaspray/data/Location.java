@@ -31,6 +31,11 @@ public class Location {
     }
 
     @Override
+    public int hashCode(){
+        return (name+country).hashCode();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o.getClass() != Location.class) {
             return false;
