@@ -10,7 +10,6 @@ public class HourlyData {
     private final int weatherCode;
 
     private final double sigHeight; // significant wave height
-    // double swellHeight;
     private final int swellDeg;
 
     public HourlyData(JSONObject o, Calendar date) {

@@ -23,7 +23,7 @@ public class TideData {
     }
 
     public TideData(String date, String type) {
-        high = type.equals("High") ? true : false;
+        high = type.equals("High");
         String format = "YYYY-MM-dd'T'HH:mm+SSSS";
         SimpleDateFormat form = new SimpleDateFormat(format);
         try {
@@ -31,11 +31,5 @@ public class TideData {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static void main(String[] args) {
-        TideData d = new TideData("2019-05-16T09:24+0000", "High");
-
-        System.out.println(d.getTimeString());
     }
 }

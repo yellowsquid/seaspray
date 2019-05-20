@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 public class DailyData {
     private final Calendar date;
-    private final String sunrise;
+    private final String sunrise; // String since printed as text, never processed
     private final String sunset;
     private final List<HourlyData> hours;
 

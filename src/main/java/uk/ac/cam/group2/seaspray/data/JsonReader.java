@@ -22,6 +22,7 @@ public class JsonReader {
     }
 
     private static String streamToString(InputStream inputStream) {
+        // read to end of stream
         return new Scanner(inputStream, StandardCharsets.UTF_8).useDelimiter("\\Z").next();
     }
 

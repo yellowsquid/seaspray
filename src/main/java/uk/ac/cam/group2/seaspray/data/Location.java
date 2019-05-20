@@ -8,8 +8,6 @@ public class Location {
     public final double lon;
     public final String country;
 
-    // TODO: worldtides.info
-
     public Location(JSONObject o) {
         this(
                 o.getString("name"),
@@ -25,22 +23,24 @@ public class Location {
         this.country = country;
     }
 
+    // Display in list as "Location (Country Code)"
     @Override
     public String toString() {
         return name + " (" + country + ")";
     }
 
+    // needed to remove duplicates with stream.distinct()
     @Override
     public int hashCode(){
         return (name+country).hashCode();
     }
 
+    // needed to remove duplicates with stream.distinct()
     @Override
     public boolean equals(Object o) {
         if (o.getClass() != Location.class) {
             return false;
         }
-
         Location l = (Location) o;
         return name.equals(l.name) && country.equals(l.country);
     }

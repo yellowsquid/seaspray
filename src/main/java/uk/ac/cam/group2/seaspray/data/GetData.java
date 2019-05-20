@@ -38,12 +38,11 @@ public class GetData {
         }
 
         JSONObject output = new JSONObject(response);
-
         if (output.getInt("status") == 400) {
-            return List.of();
+            return List.of(); // no tide data found
         }
 
-        JSONArray ar = new JSONObject(response).getJSONArray("extremes");
+        JSONArray ar = new JSONObject(response).getJSONArray("extremes"); // low/high tides
 
         return arrayToStream(ar)
                 .map(o -> new TideData(o.getString("date"), o.getString("type")))
@@ -52,7 +51,7 @@ public class GetData {
 
     public static Location getCurrentLocation() {
         // Not implemented as mobile device specific
-        // Would require additional packages not used in practice
+        // Would require additional packages not used for laptop demo
         return new Location("Cambridge", 52.205, 0.123, "GB");
     }
 
@@ -62,7 +61,7 @@ public class GetData {
                         SEARCH_BASE + "?q=" + where + "&type=like" + "&APPID=" + SEARCH_KEY);
 
         if (response == null) {
-            return List.of();
+            return List.of(); // no locations
         }
 
         // get only locations which have weather data

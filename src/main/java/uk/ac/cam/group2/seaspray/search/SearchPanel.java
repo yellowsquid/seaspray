@@ -33,7 +33,7 @@ public class SearchPanel extends JPanel {
         errorPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
         errorPanel.setBackground(Color.white);
 
-        recents = new LinkedList<Location>();
+        recents = new LinkedList<>();
         searchBar = new JTextField();
         searchButton = new JButton();
 
@@ -53,13 +53,7 @@ public class SearchPanel extends JPanel {
         searchButton.setBackground(Color.decode("#72C7EC"));
 
         // make button search when clicked
-        searchButton.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        search();
-                    }
-                });
+        searchButton.addActionListener(e -> search());
 
         // add everything search-related to the searching panel
         searching.setLayout(new BoxLayout(searching, BoxLayout.LINE_AXIS));

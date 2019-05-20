@@ -3,6 +3,7 @@ package uk.ac.cam.group2.seaspray.data;
 import java.util.Set;
 
 public enum Condition {
+    // numerical codes returned by API request for weather
     CLEAR("clear.png", Set.of(113)),
     CLOUD_CLEAR("clear_cloud.png", Set.of(116)),
     CLOUD("cloud.png", Set.of(119, 122)),
@@ -18,7 +19,7 @@ public enum Condition {
     private final String path;
     private final Set<Integer> codes;
 
-    private Condition(String path, Set<Integer> codes) {
+    Condition(String path, Set<Integer> codes) {
         this.path = PATH_PREFIX + path;
         this.codes = codes;
     }
