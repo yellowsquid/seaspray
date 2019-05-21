@@ -69,7 +69,7 @@ public class CurrentPanel extends JPanel {
         c.fill = GridBagConstraints.BOTH;
 
         try {
-            add(new WindWidget(currentData.getWind()), c);
+            add(new WindWidget(currentData.getWind(),true), c);
         } catch (IOException e) {
             throw new UncheckedIOException("Cannot find wind icon.", e);
         }
