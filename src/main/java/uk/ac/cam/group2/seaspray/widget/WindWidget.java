@@ -8,12 +8,10 @@ import uk.ac.cam.group2.seaspray.data.WindData;
 
 /** Displays current wind speed and direction FIXME: I do nothing */
 public class WindWidget extends IconWidget {
-    private final WindData windData;
+    private WindData windData;
 
-    public WindWidget(WindData windData) throws IOException {
+    public WindWidget() throws IOException {
         super("src/main/resources/windarrows/WindN.png");
-        this.windData = windData;
-        setBearing(windData.getDirectionDeg());
     }
 
     @Override
@@ -23,8 +21,13 @@ public class WindWidget extends IconWidget {
     }
 
     @Override
-    public void paintComponent(Graphics graphics) {
+    protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
+
+        if (windData == null) {
+            return;
+        }
+
         graphics.setColor(Color.BLACK);
         int centerX = getWidth() / 2;
         int centerY = getHeight() / 2;
@@ -34,5 +37,11 @@ public class WindWidget extends IconWidget {
         int windXOffset = centerX - ((Math.abs(windSpeed) < 10 ? charWidth / 2 : charWidth));
         int windYOffset = centerY + charHeight / 2;
         graphics.drawString("" + windData.getWindSpeedKph(), windXOffset, windYOffset);
+    }
+
+    public void setData(WindData windData) {
+        this.windData = windData;
+        setBearing(windData.getDirectionDeg());
+        repaint();
     }
 }
