@@ -6,12 +6,18 @@ import java.awt.Graphics;
 import java.io.IOException;
 import uk.ac.cam.group2.seaspray.data.WindData;
 
-/** Displays current wind speed and direction FIXME: I do nothing */
+/** Displays current wind speed and direction  */
 public class WindWidget extends IconWidget {
     private WindData windData;
+    private boolean large = false;
 
     public WindWidget() throws IOException {
         super("src/main/resources/windarrows/WindN.png");
+    }
+
+    public WindWidget(boolean large) throws IOException {
+        super("src/main/resources/windarrows/WindN.png");
+        this.large = large;
     }
 
     @Override
@@ -36,7 +42,12 @@ public class WindWidget extends IconWidget {
         int windSpeed = windData.getWindSpeedKph();
         int windXOffset = centerX - ((Math.abs(windSpeed) < 10 ? charWidth / 2 : charWidth));
         int windYOffset = centerY + charHeight / 2;
-        graphics.drawString("" + windData.getWindSpeedKph(), windXOffset, windYOffset);
+        if (large) { // set new font, change text offset
+            graphics.setFont(graphics.getFont().deriveFont(graphics.getFont().getSize()*3.0f));
+            graphics.drawString("" + windData.getWindSpeedKph(), windXOffset-12, windYOffset+5);
+        } else {
+            graphics.drawString("" + windData.getWindSpeedKph(), windXOffset, windYOffset);
+        }
     }
 
     public void setData(WindData windData) {
