@@ -28,10 +28,10 @@ public class SunPanel extends JPanel {
         IconWidget setIcon = null;
 
         try {
-            riseIcon = new IconWidget("src/main/resources/sunrise.png");
+            riseIcon = new IconWidget("src/main/resources/sunrise4.png");
             riseIcon.setAlignment(IconWidget.EAST);
             riseIcon.setPreferredSize(new Dimension(100, 100));
-            setIcon = new IconWidget("src/main/resources/sunset.png");
+            setIcon = new IconWidget("src/main/resources/sunset3.png");
             riseIcon.setAlignment(IconWidget.EAST);
             setIcon.setPreferredSize(new Dimension(100, 100));
         } catch (IOException e) {
