@@ -13,7 +13,6 @@ public class CurrentData {
     private final int waveDir;
     private final List<TideData> tides;
 
-
     public CurrentData(DailyData d, List<TideData> tides) {
         this.tides = tides;
         sunRise = d.getSunrise();

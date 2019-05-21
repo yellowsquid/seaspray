@@ -1,6 +1,5 @@
 package uk.ac.cam.group2.seaspray.data;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

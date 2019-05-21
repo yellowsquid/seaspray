@@ -170,8 +170,16 @@ public class ScrollLayoutManager implements LayoutManager2, MouseInputListener {
 
         for (Component component : components) {
             int weight = weights.get(component);
-            component.setBounds(0, currentTop, width, deltaHeight * weight);
-            currentTop += deltaHeight;
+            int height = deltaHeight * weight;
+
+            if (currentTop >= deltaHeight || currentTop <= -height) {
+                component.setVisible(false);
+            } else {
+                component.setVisible(true);
+                component.setBounds(0, currentTop, width, height);
+            }
+
+            currentTop += height;
         }
     }
 

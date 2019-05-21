@@ -31,8 +31,8 @@ public class Location {
 
     // needed to remove duplicates with stream.distinct()
     @Override
-    public int hashCode(){
-        return (name+country).hashCode();
+    public int hashCode() {
+        return (name + country).hashCode();
     }
 
     // needed to remove duplicates with stream.distinct()
