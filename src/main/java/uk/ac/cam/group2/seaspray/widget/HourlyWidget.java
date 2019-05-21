@@ -22,8 +22,6 @@ public class HourlyWidget extends JPanel {
     private final JLabel waveHeightWidget;
     private final WaveDirectionWidget waveDirWidget;
 
-
-
     public HourlyWidget() {
         setLayout(new GridBagLayout());
         setBackground(Color.WHITE);

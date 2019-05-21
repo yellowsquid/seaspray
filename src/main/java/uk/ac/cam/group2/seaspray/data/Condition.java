@@ -8,8 +8,7 @@ public enum Condition {
     CLOUD_CLEAR("partsunny.png", Set.of(116)),
     CLOUD("cloudy.png", Set.of(119, 122)),
     RAIN_LIGHT(
-            "lrain.png",
-            Set.of(176, 179, 185, 263, 266, 293, 296, 311, 317, 323, 326, 353, 362, 368)),
+            "lrain.png", Set.of(176, 179, 185, 263, 266, 293, 296, 311, 317, 323, 326, 353, 362, 368)),
     RAIN_MEDIUM("mrain.png", Set.of(281, 299, 302, 314, 320, 329, 332, 350, 356, 374)),
     RAIN_HEAVY("hrain.png", Set.of(227, 230, 284, 305, 308, 335, 338, 359, 365, 371, 377)),
     STORM("storm.png", Set.of(200, 386, 389, 392, 395)),
