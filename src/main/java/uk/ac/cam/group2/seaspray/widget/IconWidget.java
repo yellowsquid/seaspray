@@ -48,7 +48,7 @@ public class IconWidget extends JPanel {
     }
 
     public void setBearing(double bearing) {
-        setRotation(Math.toRadians(bearing));
+        setRotation(Math.toRadians(180 + bearing));
     }
 
     public void setRotation(double radians) {
