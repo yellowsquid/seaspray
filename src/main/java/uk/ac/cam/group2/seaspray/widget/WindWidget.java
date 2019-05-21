@@ -43,8 +43,8 @@ public class WindWidget extends IconWidget {
         int windXOffset = centerX - ((Math.abs(windSpeed) < 10 ? charWidth / 2 : charWidth));
         int windYOffset = centerY + charHeight / 2;
         if (large) { // set new font, change text offset
-            graphics.setFont(graphics.getFont().deriveFont(graphics.getFont().getSize()*3.0f));
-            graphics.drawString("" + windData.getWindSpeedKph(), windXOffset-12, windYOffset+5);
+            graphics.setFont(graphics.getFont().deriveFont(graphics.getFont().getSize()*2.0f));
+            graphics.drawString("" + windData.getWindSpeedKph(), windXOffset-5, windYOffset+5);
         } else {
             graphics.drawString("" + windData.getWindSpeedKph(), windXOffset, windYOffset);
         }
