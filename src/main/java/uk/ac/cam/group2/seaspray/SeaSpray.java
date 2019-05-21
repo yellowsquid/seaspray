@@ -22,6 +22,9 @@ public class SeaSpray extends JFrame {
     private JPanel mainPanel; // main panel, switches between search and root
     private JPanel headerPanel; // panel containing the header, always on top
     private JPanel header; // actual header inside the panel
+    private CurrentPanel currentPanel; // current conditions panel
+    private HourlyPanel hourlyPanel; // next 24 hours
+    private WeeklyPanel weeklyPanel; // next seven days
 
     // header buttons
     private IconButtonWidget currentLocationButton;
@@ -83,6 +86,12 @@ public class SeaSpray extends JFrame {
         rootPanel.setLayout(lm);
         rootPanel.addMouseListener(lm);
         rootPanel.addMouseMotionListener(lm);
+        currentPanel = new CurrentPanel();
+        hourlyPanel = new HourlyPanel();
+        weeklyPanel = new WeeklyPanel();
+        rootPanel.add(currentPanel, Integer.valueOf(1));
+        rootPanel.add(hourlyPanel, Integer.valueOf(1));
+        rootPanel.add(weeklyPanel, Integer.valueOf(2));
 
         // CURRENT, HOURLY, WEEKLY data
         findCurrentLocation();
@@ -133,9 +142,9 @@ public class SeaSpray extends JFrame {
 
     public void update() {
         // rebuild all components
-        rootPanel.removeAll();
         List<DailyData> dailyData = GetData.getWeather(location);
-        List<TideData> tides = GetData.tideTimes(location);
+        List<TideData> tides =
+                GetData.tideTimes(location).stream().limit(4).collect(Collectors.toList());
 
         // Find the 7 hour entries immediately after the current time
         Calendar time = Calendar.getInstance();
@@ -150,9 +159,9 @@ public class SeaSpray extends JFrame {
         List<HourlyData> firstDay = dailyData.get(0).getHours();
 
         // add to the panel.
-        rootPanel.add(new CurrentPanel(new CurrentData(dailyData.get(0), tides)), Integer.valueOf(1));
-        rootPanel.add(new HourlyPanel(next24Hours), Integer.valueOf(1));
-        rootPanel.add(new WeeklyPanel(dailyData), Integer.valueOf(2));
+        currentPanel.setData(new CurrentData(dailyData.get(0), tides));
+        hourlyPanel.setData(next24Hours);
+        weeklyPanel.setData(dailyData);
     }
 
     public static void main(String[] args) {

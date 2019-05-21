@@ -19,9 +19,11 @@ public class IconWidget extends JPanel {
     public static final int SOUTH = 2;
     public static final int EAST = 4;
     public static final int WEST = 8;
-    private final Image image;
+    private Image image;
     private int alignment;
     private double rotation;
+
+    public IconWidget() {}
 
     public IconWidget(String path) throws IOException {
         this(ImageIO.read(new File(path)));
@@ -43,8 +45,14 @@ public class IconWidget extends JPanel {
         return image;
     }
 
+    public void setPath(String path) throws IOException {
+        this.image = readImage(path);
+        repaint();
+    }
+
     public void setAlignment(int alignment) {
         this.alignment = alignment;
+        repaint();
     }
 
     public void setBearing(double bearing) {
@@ -53,10 +61,17 @@ public class IconWidget extends JPanel {
 
     public void setRotation(double radians) {
         this.rotation = radians;
+        repaint();
     }
 
     @Override
     protected void paintComponent(Graphics graphics) {
+        if (image == null) {
+            return;
+        }
+
+        graphics.setColor(getBackground());
+        graphics.fillRect(0, 0, getWidth(), getHeight());
         Graphics2D g = (Graphics2D) graphics.create();
         int min = Math.min(getWidth(), getHeight());
         int centerX = getWidth() / 2;

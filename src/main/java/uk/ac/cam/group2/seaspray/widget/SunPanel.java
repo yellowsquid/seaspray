@@ -10,7 +10,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class SunPanel extends JPanel {
-    public SunPanel(String sunRise, String sunSet) {
+    private final JLabel riseTime;
+    private final JLabel setTime;
+
+    public SunPanel() {
         setLayout(new GridBagLayout());
         setBackground(Color.WHITE);
         GridBagConstraints c = new GridBagConstraints();
@@ -35,15 +38,20 @@ public class SunPanel extends JPanel {
             throw new UncheckedIOException("Failed to load sunrise/set icons.", e);
         }
 
-        JLabel upTime = new JLabel(sunRise);
-        JLabel downTime = new JLabel(sunSet);
+        riseTime = new JLabel();
+        setTime = new JLabel();
 
         add(riseIcon, c);
         c.gridx++;
-        add(upTime, c);
+        add(riseTime, c);
         c.gridx++;
         add(setIcon, c);
         c.gridx++;
-        add(downTime, c);
+        add(setTime, c);
+    }
+
+    public void setData(String sunRise, String sunSet) {
+        riseTime.setText(sunRise);
+        setTime.setText(sunSet);
     }
 }
