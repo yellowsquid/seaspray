@@ -42,15 +42,14 @@ public class SeaSpray extends JFrame {
 
         // header button functionality
         try {
-            currentLocationButton =
-                    new IconButtonWidget("src/main/resources/map.png", this::findCurrentLocation);
+            currentLocationButton = new IconButtonWidget("map.png", this::findCurrentLocation);
             currentLocationButton.setAlignment(IconWidget.WEST);
         } catch (IOException e) {
             throw new UncheckedIOException("Missing map icon", e);
         }
 
         try {
-            searchButton = new IconButtonWidget("src/main/resources/search.png", this::switchToSearch);
+            searchButton = new IconButtonWidget("search.png", this::switchToSearch);
             searchButton.setAlignment(IconWidget.EAST);
         } catch (IOException e) {
             throw new UncheckedIOException("Missing search icon", e);
@@ -59,7 +58,7 @@ public class SeaSpray extends JFrame {
         try {
             returnButton =
                     new IconButtonWidget(
-                            "src/main/resources/back.png",
+                            "back.png",
                             () -> {
                                 loadLocation(location);
                                 searchPanel.reset();

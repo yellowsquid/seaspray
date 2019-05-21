@@ -32,6 +32,18 @@ spotless {
     }
 }
 
+sourceSets {
+    main {
+        java {
+            srcDir "src/main/java"
+        }
+
+        resources {
+            srcDir "src/main/resources"
+        }
+    }
+}
+
 run.dependsOn 'spotlessApply'
 
 // Define the main class for the application

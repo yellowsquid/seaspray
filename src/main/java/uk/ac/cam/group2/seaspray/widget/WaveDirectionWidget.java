@@ -4,6 +4,6 @@ import java.io.IOException;
 
 public class WaveDirectionWidget extends IconWidget {
     public WaveDirectionWidget() throws IOException {
-        super("src/main/resources/waveAngles/wave0.png");
+        super("waveAngles/wave0.png");
     }
 }

@@ -12,11 +12,11 @@ public class WindWidget extends IconWidget {
     private boolean large = false;
 
     public WindWidget() throws IOException {
-        super("src/main/resources/windarrows/WindN.png");
+        this(false);
     }
 
     public WindWidget(boolean large) throws IOException {
-        super("src/main/resources/windarrows/WindN.png");
+        super("windarrows/WindN.png");
         this.large = large;
     }
 

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +25,7 @@ public class IconWidget extends JPanel {
     public IconWidget() {}
 
     public IconWidget(String path) throws IOException {
-        this(ImageIO.read(new File(path)));
+        this(readImage(path));
     }
 
     public IconWidget(Image image) {
@@ -40,7 +39,7 @@ public class IconWidget extends JPanel {
             return CACHE.get(path);
         }
 
-        Image image = ImageIO.read(new File(path));
+        Image image = ImageIO.read(ClassLoader.getSystemClassLoader().getResource(path));
         CACHE.put(path, image);
         return image;
     }

@@ -14,7 +14,7 @@ public enum Condition {
     STORM("storm.png", Set.of(200, 386, 389, 392, 395)),
     FOG("mrain.png", Set.of(143, 248, 260)); // Fallback to rain_medium.
 
-    private static final String PATH_PREFIX = "src/main/resources/conditions/";
+    private static final String PATH_PREFIX = "conditions/";
     private final String path;
     private final Set<Integer> codes;
 
