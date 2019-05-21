@@ -25,8 +25,8 @@ public class Header extends JPanel {
         namePanel.setBackground(headerColor);
         namePanel.add(locationName, BorderLayout.CENTER);
 
-        leftButton.setBackground(buttonColor);
-        rightButton.setBackground(buttonColor);
+        leftButton.setBackground(headerColor);
+        rightButton.setBackground(headerColor);
 
         // fix the same maximum square dimension for both buttons
         Dimension maxDim = new Dimension(48, 48);
