@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class GetData {
-    private static final String TIDE_KEY = "6ec0ef65-27ef-4387-9a7b-35d50f4b1706";
+    private static final String TIDE_KEY = "dc0c823f-eca8-4507-9ec6-56f335f7c58d";
     private static final String MARINE_KEY = "7ec22fe9f839499e8c7122127193004";
     private static final String SEARCH_KEY = "f4c78c6cc6d74b4862713c5f05505174";
     private static final String TIDE_BASE = "http://www.worldtides.info/api";
